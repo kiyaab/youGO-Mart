@@ -4,8 +4,9 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useLanguage } from '@/lib/language-context';
-import { Search, MapPin, Sparkles, ShieldCheck, ArrowRight, PlusCircle, CheckCircle2 } from 'lucide-react';
+import { Search, MapPin, ArrowRight, Store, ShoppingBag, ShieldCheck, Sparkles, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 export const Hero: React.FC = () => {
   const router = useRouter();
@@ -25,7 +26,7 @@ export const Hero: React.FC = () => {
     <section
       className="py-5 position-relative overflow-hidden"
       style={{
-        background: 'radial-gradient(ellipse at top, rgba(249, 115, 22, 0.08) 0%, var(--bg-main) 70%)',
+        background: 'radial-gradient(circle at 80% 20%, rgba(249, 115, 22, 0.08) 0%, #FFF7F0 70%)',
         borderBottom: '1px solid var(--border-color)',
       }}
     >
@@ -33,18 +34,26 @@ export const Hero: React.FC = () => {
         <div className="row align-items-center g-5">
           {/* Left Column: Headline and Value Proposition */}
           <div className="col-lg-7">
-            {/* Launch / Commission Badge */}
-            <div className="d-inline-flex align-items-center gap-2 px-3 py-1 mb-3 rounded-pill glass-card border-warning">
+            {/* Launch Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="d-inline-flex align-items-center gap-2 px-3 py-1 mb-3 rounded-pill glass-card border-warning"
+            >
               <span className="badge rounded-pill bg-warning text-dark fw-bold">
-                {language === 'am' ? 'ኢትዮጵያ ቀዳሚ 🇪🇹' : 'Ethiopia First 🇪🇹'}
+                {t('ethiopia_first')}
               </span>
               <span className="small fw-semibold" style={{ color: 'var(--text-main)' }}>
-                {language === 'am' ? '100% ያለ ኮሚሽን ነፃ ግብይት' : '100% Commission-Free Classifieds'}
+                {t('zero_commission')}
               </span>
-            </div>
+            </motion.div>
 
             {/* Main Headline */}
-            <h1
+            <motion.h1
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
               className="fw-extrabold display-4 mb-3 tracking-tight"
               style={{
                 letterSpacing: '-0.03em',
@@ -53,32 +62,28 @@ export const Hero: React.FC = () => {
                 color: 'var(--text-main)',
               }}
             >
-              {language === 'am' ? (
-                <>
-                  ፈልግ። ወደደው። <span style={{ color: 'var(--primary-orange)' }}>የራስህ አድርገው።</span>
-                </>
-              ) : (
-                <>
-                  Find it. Love it. <span style={{ color: 'var(--primary-orange)' }}>Make it yours.</span>
-                </>
-              )}
-            </h1>
+              {t('hero_headline')}
+            </motion.h1>
 
             {/* Supporting Copy */}
-            <p
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               className="lead text-muted mb-4"
-              style={{ fontSize: '1.15rem', lineHeight: 1.6, maxWidth: '560px' }}
+              style={{ fontSize: '1.15rem', lineHeight: 1.6, maxWidth: '580px' }}
             >
-              {language === 'am'
-                ? 'በአቅራቢያዎ ያሉ ምርጥ ምርቶችን ያግኙ። የማያስፈልጉዎትን እቃዎች ይሽጡ። በመላው ኢትዮጵያ ካሉ ሰዎች ጋር ያለ ምንም የኮሚሽን ክፍያ በቀጥታ ይገናኙ።'
-                : 'Discover great products near you. Sell what you no longer need. Connect directly with people across Ethiopia with zero transaction cuts.'}
-            </p>
+              {t('hero_subheadline')}
+            </motion.p>
 
-            {/* Central Glassy Search Box */}
-            <form
+            {/* Central Interactive Search Box */}
+            <motion.form
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
               onSubmit={handleSearch}
-              className="p-2 p-sm-3 glass-card shadow-md rounded-4 mb-4"
-              style={{ maxWidth: '620px' }}
+              className="p-2 p-sm-3 glass-card shadow-sm rounded-4 mb-4"
+              style={{ maxWidth: '640px' }}
             >
               <div className="row g-2 align-items-center">
                 <div className="col-12 col-sm-6 position-relative">
@@ -89,10 +94,10 @@ export const Hero: React.FC = () => {
                     <input
                       type="text"
                       className="form-control border-0 ps-1 shadow-none bg-transparent"
-                      placeholder={language === 'am' ? 'ምን መፈለግ ይፈልጋሉ?' : 'What are you looking for?'}
+                      placeholder={t('search_placeholder')}
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      style={{ fontSize: '0.95rem' }}
+                      style={{ fontSize: '0.92rem' }}
                     />
                   </div>
                 </div>
@@ -121,56 +126,66 @@ export const Hero: React.FC = () => {
 
                 <div className="col-12 col-sm-2">
                   <button type="submit" className="btn-orange w-100 py-2">
-                    {language === 'am' ? 'ፈልግ' : 'Search'}
+                    {t('search_btn')}
                   </button>
                 </div>
               </div>
-            </form>
+            </motion.form>
 
             {/* Primary Action Buttons */}
-            <div className="d-flex flex-wrap align-items-center gap-3">
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="d-flex flex-wrap align-items-center gap-3"
+            >
               <Link href="/search" className="btn-orange py-2.5 px-4 shadow-sm">
-                {t('explore_marketplace')} <ArrowRight size={18} />
+                <ShoppingBag size={18} /> {t('start_shopping')}
               </Link>
-              <Link href="/post-ad" className="btn-neutral py-2.5 px-4 fw-semibold border-warning">
-                <PlusCircle size={18} className="text-warning inline me-1" /> {t('post_free_ad')}
+              <Link href="/auth/register?role=seller" className="btn-orange-outline py-2.5 px-4">
+                <Store size={18} /> {t('become_a_seller')}
               </Link>
-            </div>
+            </motion.div>
 
             {/* Highlights row */}
             <div className="d-flex flex-wrap align-items-center gap-4 mt-4 pt-3 border-top text-muted small">
               <div className="d-flex align-items-center gap-2">
                 <ShieldCheck size={18} className="text-success" />
-                <span>{language === 'am' ? 'ምንም ኮሚሽን የለም' : '0% Commission'}</span>
+                <span>{t('zero_commission')}</span>
               </div>
               <div className="d-flex align-items-center gap-2">
                 <Sparkles size={18} className="text-warning" />
-                <span>{language === 'am' ? 'ቀጥታ ግንኙነት' : 'Direct Calls & WhatsApp'}</span>
+                <span>{t('direct_connection')}</span>
               </div>
               <div className="d-flex align-items-center gap-2">
                 <span className="fw-bold text-dark">0 ETB</span>
-                <span>{language === 'am' ? 'ነፃ ማስታወቂያ' : 'Free Standard Postings'}</span>
+                <span>Standard Postings</span>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Hero Visual Showcase */}
+          {/* Right Column: Visual Marketplace Showcase with Product Cards */}
           <div className="col-lg-5 d-none d-lg-block">
-            <div className="position-relative">
-              {/* Product Card 1 */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="position-relative"
+            >
+              {/* Product Card 1: Electronics */}
               <div
                 className="glass-card shadow-lg p-3 position-relative z-2 mb-3"
                 style={{
-                  maxWidth: '340px',
-                  borderRadius: '16px',
+                  maxWidth: '350px',
+                  borderRadius: '18px',
                   transform: 'rotate(-2deg)',
                 }}
               >
                 <div className="d-flex align-items-center gap-3">
                   <div
                     style={{
-                      width: '72px',
-                      height: '72px',
+                      width: '74px',
+                      height: '74px',
                       borderRadius: '12px',
                       overflow: 'hidden',
                       position: 'relative',
@@ -186,7 +201,7 @@ export const Hero: React.FC = () => {
                   <div>
                     <span className="badge-featured mb-1">Spotlight</span>
                     <h6 className="fw-bold mb-1 small">iPhone 15 Pro Max 256GB</h6>
-                    <div className="yg-price" style={{ fontSize: '1.1rem' }}>
+                    <div className="fw-bold" style={{ color: 'var(--primary-orange)', fontSize: '1.05rem' }}>
                       148,000 <small className="text-muted" style={{ fontSize: '0.75rem' }}>ETB</small>
                     </div>
                     <div className="small text-muted" style={{ fontSize: '0.75rem' }}>
@@ -196,20 +211,20 @@ export const Hero: React.FC = () => {
                 </div>
               </div>
 
-              {/* Product Card 2 */}
+              {/* Product Card 2: Vehicles */}
               <div
                 className="glass-card shadow-lg p-3 position-relative z-1 ms-auto"
                 style={{
                   maxWidth: '350px',
-                  borderRadius: '16px',
-                  transform: 'rotate(2deg) translateY(-15px)',
+                  borderRadius: '18px',
+                  transform: 'rotate(2deg) translateY(-10px)',
                 }}
               >
                 <div className="d-flex align-items-center gap-3">
                   <div
                     style={{
-                      width: '72px',
-                      height: '72px',
+                      width: '74px',
+                      height: '74px',
                       borderRadius: '12px',
                       overflow: 'hidden',
                       position: 'relative',
@@ -223,9 +238,11 @@ export const Hero: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <span className="badge-negotiable mb-1">Negotiable</span>
+                    <span className="badge bg-light text-dark border mb-1 small fw-semibold" style={{ fontSize: '0.7rem' }}>
+                      Verified Merchant
+                    </span>
                     <h6 className="fw-bold mb-1 small">Toyota RAV4 2022 Hybrid</h6>
-                    <div className="yg-price" style={{ fontSize: '1.1rem' }}>
+                    <div className="fw-bold" style={{ color: 'var(--primary-orange)', fontSize: '1.05rem' }}>
                       4,850,000 <small className="text-muted" style={{ fontSize: '0.75rem' }}>ETB</small>
                     </div>
                     <div className="small text-muted" style={{ fontSize: '0.75rem' }}>
@@ -235,17 +252,15 @@ export const Hero: React.FC = () => {
                 </div>
               </div>
 
-              {/* Decorative Subtle Background Element */}
+              {/* Floating Trust Indicator */}
               <div
-                className="position-absolute top-50 start-50 translate-middle rounded-circle"
-                style={{
-                  width: '320px',
-                  height: '320px',
-                  background: 'radial-gradient(circle, rgba(249, 115, 22, 0.15) 0%, rgba(249, 115, 22, 0) 70%)',
-                  zIndex: 0,
-                }}
-              />
-            </div>
+                className="glass-card p-2.5 px-3 position-absolute start-0 bottom-0 z-3 d-flex align-items-center gap-2 shadow-sm"
+                style={{ transform: 'translateY(15px)' }}
+              >
+                <CheckCircle2 size={18} className="text-success" />
+                <span className="small fw-bold">Verified Ethiopian ID Checks</span>
+              </div>
+            </motion.div>
           </div>
         </div>
       </div>

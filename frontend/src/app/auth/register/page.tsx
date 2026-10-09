@@ -26,7 +26,7 @@ function RegisterFormContent() {
   const initialRole = searchParams.get('role');
   const provider = searchParams.get('provider');
 
-  const { register } = useAuth();
+  const { register, loginWithGoogle } = useAuth();
   const { language, t } = useLanguage();
 
   const [role, setRole] = useState<'buyer' | 'seller'>(
@@ -87,12 +87,10 @@ function RegisterFormContent() {
         `new_${role}@gmail.com`
       );
       if (promptEmail) {
-        await register({
-          display_name: promptEmail.split('@')[0],
+        await loginWithGoogle({
+          name: promptEmail.split('@')[0],
           email: promptEmail,
-          password: 'GoogleAuthSecure2026!',
           role,
-          is_seller: role === 'seller',
           city: 'Addis Ababa',
         });
         if (role === 'seller') router.push('/seller/dashboard');

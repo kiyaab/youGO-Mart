@@ -39,12 +39,13 @@ export default function AdminPortalPage() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   // Admin Dashboard State
-  const [activeTab, setActiveTab] = useState<'metrics' | 'listings' | 'verifications' | 'reports' | 'users'>('metrics');
+  const [activeTab, setActiveTab] = useState<'metrics' | 'listings' | 'verifications' | 'reports' | 'users' | 'orders'>('metrics');
   const [metrics, setMetrics] = useState<any>(null);
   const [pendingListings, setPendingListings] = useState<any[]>([]);
   const [verifications, setVerifications] = useState<any[]>([]);
   const [reports, setReports] = useState<any[]>([]);
   const [usersList, setUsersList] = useState<any[]>([]);
+  const [adminOrders, setAdminOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Moderation state
@@ -54,18 +55,20 @@ export default function AdminPortalPage() {
     if (!user || user.role !== 'admin') return;
     setLoading(true);
     try {
-      const [m, pl, v, r, u] = await Promise.all([
+      const [m, pl, v, r, u, ord] = await Promise.all([
         api.admin.getMetrics().catch(() => null),
         api.admin.getPendingListings().catch(() => []),
         api.admin.getVerifications().catch(() => []),
         api.admin.getReports().catch(() => []),
         api.admin.getUsers().catch(() => []),
+        api.orders.getAdminOrders().catch(() => []),
       ]);
       setMetrics(m);
       setPendingListings(pl || []);
       setVerifications(v || []);
       setReports(r || []);
       setUsersList(u || []);
+      setAdminOrders(ord || []);
     } catch (err) {
       console.error('Failed to load admin data:', err);
     } finally {
@@ -352,6 +355,14 @@ export default function AdminPortalPage() {
           >
             User Accounts ({usersList.length})
           </button>
+          <button
+            className={`btn border-0 py-2 px-3 fw-bold ${
+              activeTab === 'orders' ? 'text-danger border-bottom border-danger border-3' : 'text-muted'
+            }`}
+            onClick={() => setActiveTab('orders')}
+          >
+            Order Oversight
+          </button>
         </div>
 
         {/* TAB 1: Overview & Audit Logs */}
@@ -556,6 +567,53 @@ export default function AdminPortalPage() {
                 </tbody>
               </table>
             </div>
+          </div>
+        )}
+
+        {/* TAB 5: Order Oversight */}
+        {activeTab === 'orders' && (
+          <div className="glass-card p-4 rounded-4 shadow-sm">
+            <h5 className="fw-bold mb-3">Platform Order Oversight & Records</h5>
+            <p className="text-muted small mb-4">
+              Real-time transaction oversight across all Ethiopian buyers and merchants.
+            </p>
+
+            {adminOrders.length > 0 ? (
+              <div className="table-responsive">
+                <table className="table table-hover align-middle mb-0">
+                  <thead className="table-light small text-uppercase">
+                    <tr>
+                      <th>Order #</th>
+                      <th>Buyer</th>
+                      <th>Total</th>
+                      <th>Payment</th>
+                      <th>Status</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {adminOrders.map((ord: any) => (
+                      <tr key={ord.id}>
+                        <td className="fw-bold small">{ord.order_number}</td>
+                        <td className="small text-muted">{ord.buyer_email || ord.shipping_name}</td>
+                        <td className="fw-bold small text-warning">{Number(ord.total_amount).toLocaleString()} {ord.currency}</td>
+                        <td>
+                          <span className="badge bg-light text-dark border small">{ord.payment_method}</span>
+                        </td>
+                        <td>
+                          <span className="badge bg-primary text-capitalize">{ord.status}</span>
+                        </td>
+                        <td className="small text-muted">{new Date(ord.created_at).toLocaleDateString()}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="text-center py-5 text-muted small">
+                <p className="m-0">No marketplace orders recorded in database yet.</p>
+              </div>
+            )}
           </div>
         )}
       </div>

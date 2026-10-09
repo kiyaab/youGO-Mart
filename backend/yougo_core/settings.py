@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "apps.notifications.apps.NotificationsConfig",
     "apps.moderation.apps.ModerationConfig",
     "apps.promotions.apps.PromotionsConfig",
+    "apps.orders.apps.OrdersConfig",
     "apps.core.apps.CoreConfig",
 ]
 

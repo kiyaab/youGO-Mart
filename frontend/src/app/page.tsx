@@ -3,15 +3,22 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Hero } from '@/components/home/Hero';
+import { ExploreMarketplaceSection } from '@/components/home/ExploreMarketplaceSection';
+import { HowItWorksSection } from '@/components/home/HowItWorksSection';
+import { ForBuyersSection } from '@/components/home/ForBuyersSection';
+import { ForSellersSection } from '@/components/home/ForSellersSection';
+import { WhyYouGoMartSection } from '@/components/home/WhyYouGoMartSection';
 import { CategoryGrid } from '@/components/home/CategoryGrid';
-import { PlatformPortfolio } from '@/components/home/PlatformPortfolio';
-import { TrustSection } from '@/components/home/TrustSection';
+import { BecomeSellerCTA } from '@/components/home/BecomeSellerCTA';
+import { FAQSection } from '@/components/home/FAQSection';
 import { ListingCard } from '@/components/listing/ListingCard';
 import { api } from '@/lib/api';
+import { useLanguage } from '@/lib/language-context';
 import { Category, ListingCard as ListingCardType } from '@/types';
-import { Sparkles, ArrowRight, Clock, PlusCircle } from 'lucide-react';
+import { Sparkles, ArrowRight, Clock, ShoppingBag } from 'lucide-react';
 
 export default function HomePage() {
+  const { language, t } = useLanguage();
   const [categories, setCategories] = useState<Category[]>([]);
   const [featuredListings, setFeaturedListings] = useState<ListingCardType[]>([]);
   const [recentListings, setRecentListings] = useState<ListingCardType[]>([]);
@@ -20,14 +27,14 @@ export default function HomePage() {
   useEffect(() => {
     async function loadData() {
       try {
-        const [cats, feat, rec] = await Promise.all([
+        const [cats, feat, rec] = await Promise.allSettled([
           api.categories.getAll(),
           api.listings.getFeatured(),
           api.listings.getRecent(),
         ]);
-        setCategories(cats || []);
-        setFeaturedListings(feat || []);
-        setRecentListings(rec || []);
+        if (cats.status === 'fulfilled') setCategories(cats.value || []);
+        if (feat.status === 'fulfilled') setFeaturedListings(feat.value || []);
+        if (rec.status === 'fulfilled') setRecentListings(rec.value || []);
       } catch (err) {
         console.error('Failed to load homepage data:', err);
       } finally {
@@ -42,34 +49,33 @@ export default function HomePage() {
       {/* 1. Hero Section */}
       <Hero />
 
-      {/* 2. In-Depth Platform Portfolio & Dual Role Registration */}
-      <PlatformPortfolio />
+      {/* 2. Explore the Marketplace (Discovery, Search, Filtering) */}
+      <ExploreMarketplaceSection />
 
-      {/* 3. Category Discovery Grid */}
-      <CategoryGrid categories={categories} />
-
-      {/* 3. Featured Listings Section */}
-      <section className="py-5" style={{ backgroundColor: 'var(--bg-main)' }}>
+      {/* 3. Real Product Highlights (Featured Listings) */}
+      <section className="py-5" style={{ backgroundColor: '#FFF7F0' }}>
         <div className="container">
           <div className="d-flex align-items-center justify-content-between mb-4">
             <div className="d-flex align-items-center gap-2">
               <div
                 className="p-2 rounded-3 text-warning"
-                style={{ backgroundColor: 'rgba(249, 115, 22, 0.12)' }}
+                style={{ backgroundColor: 'var(--primary-orange-light)' }}
               >
                 <Sparkles size={22} />
               </div>
               <div>
                 <h3 className="fw-bold m-0" style={{ letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
-                  Featured Listings
+                  {language === 'am' ? 'ተለይተው የቀረቡ እቃዎች' : 'Featured Marketplace Deals'}
                 </h3>
                 <p className="text-muted small m-0">
-                  Hand-picked spotlights and verified deals in Addis Ababa
+                  {language === 'am'
+                    ? 'በአዲስ አበባ እና በኢትዮጵያ ውስጥ ያሉ የተረጋገጡ ቅናሾች'
+                    : 'Hand-picked spotlights and verified listings in Addis Ababa'}
                 </p>
               </div>
             </div>
             <Link href="/search?promoted=true" className="btn btn-neutral btn-sm px-3 fw-semibold">
-              View All Featured →
+              {language === 'am' ? 'ሁሉንም እይ' : 'View All'} →
             </Link>
           </div>
 
@@ -77,10 +83,9 @@ export default function HomePage() {
             <div className="row g-3">
               {[1, 2, 3, 4].map((i) => (
                 <div key={i} className="col-12 col-sm-6 col-lg-3">
-                  <div className="yg-card p-3" style={{ height: '320px', opacity: 0.6 }}>
+                  <div className="glass-card p-3" style={{ height: '320px', opacity: 0.6 }}>
                     <div className="bg-secondary bg-opacity-25 w-100 rounded mb-3" style={{ height: '180px' }} />
                     <div className="bg-secondary bg-opacity-25 w-75 rounded mb-2" style={{ height: '20px' }} />
-                    <div className="bg-secondary bg-opacity-25 w-50 rounded" style={{ height: '16px' }} />
                   </div>
                 </div>
               ))}
@@ -94,47 +99,63 @@ export default function HomePage() {
               ))}
             </div>
           ) : (
-            <div className="yg-card p-5 text-center">
-              <p className="text-muted m-0">No featured listings found.</p>
+            <div className="glass-card p-5 text-center rounded-4">
+              <ShoppingBag size={36} className="text-muted opacity-40 mb-2" />
+              <p className="text-muted small m-0">
+                {t('no_products_yet')}
+              </p>
             </div>
           )}
         </div>
       </section>
 
-      {/* 4. Recent & Popular Listings Section */}
-      <section className="py-5" style={{ backgroundColor: 'var(--bg-card)' }}>
+      {/* 4. How It Works (Clear steps for buyers & sellers) */}
+      <HowItWorksSection />
+
+      {/* 5. For Buyers Section (Wishlists, Carts, Order Tracking) */}
+      <ForBuyersSection />
+
+      {/* 6. For Sellers Section (Store Creation, Inventory, Real Analytics) */}
+      <ForSellersSection />
+
+      {/* 7. Why youGO-mart (Actual platform advantages, 0% commission) */}
+      <WhyYouGoMartSection />
+
+      {/* 8. Popular Categories (From real database) */}
+      <CategoryGrid categories={categories} />
+
+      {/* 9. Fresh Recent Listings */}
+      <section className="py-5" style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid var(--border-color)' }}>
         <div className="container">
           <div className="d-flex align-items-center justify-content-between mb-4">
             <div className="d-flex align-items-center gap-2">
               <div
-                className="p-2 rounded-3 text-primary"
-                style={{ backgroundColor: 'rgba(59, 130, 246, 0.12)' }}
+                className="p-2 rounded-3 text-warning"
+                style={{ backgroundColor: 'var(--primary-orange-light)' }}
               >
                 <Clock size={22} />
               </div>
               <div>
                 <h3 className="fw-bold m-0" style={{ letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
-                  Recently Added
+                  {language === 'am' ? 'በቅርብ ጊዜ የተጨመሩ እቃዎች' : 'Recently Published Products'}
                 </h3>
                 <p className="text-muted small m-0">
-                  Fresh marketplace listings uploaded within the last 24 hours
+                  {language === 'am'
+                    ? 'በመጨረሻዎቹ ሰዓታት የተጨመሩ አዳዲስ እቃዎች'
+                    : 'Freshly listed merchandise from verified merchants across Ethiopia'}
                 </p>
               </div>
             </div>
             <Link href="/search" className="btn btn-neutral btn-sm px-3 fw-semibold">
-              Browse All ({recentListings.length}) →
+              {language === 'am' ? 'ሁሉንም ፈልግ' : 'Browse All'} →
             </Link>
           </div>
 
           {loading ? (
             <div className="row g-3">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+              {[1, 2, 3, 4].map((i) => (
                 <div key={i} className="col-12 col-sm-6 col-lg-3">
-                  <div className="yg-card p-3" style={{ height: '320px', opacity: 0.6 }}>
-                    <div className="bg-secondary bg-opacity-25 w-100 rounded mb-3" style={{ height: '180px' }} />
-                    <div className="bg-secondary bg-opacity-25 w-75 rounded mb-2" style={{ height: '20px' }} />
-                    <div className="bg-secondary bg-opacity-25 w-50 rounded" style={{ height: '16px' }} />
-                  </div>
+                  <div className="glass-card p-3" style={{ height: '320px', opacity: 0.6 }} />
                 </div>
               ))}
             </div>
@@ -147,21 +168,18 @@ export default function HomePage() {
               ))}
             </div>
           ) : (
-            <div className="yg-card p-5 text-center">
-              <p className="text-muted m-0">No recent listings available.</p>
+            <div className="glass-card p-5 text-center rounded-4">
+              <p className="text-muted small m-0">{t('no_products_yet')}</p>
             </div>
           )}
-
-          <div className="text-center mt-5">
-            <Link href="/search" className="btn-orange px-5 py-3">
-              Explore All Marketplace Items <ArrowRight size={18} />
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* 5. Trust and Direct Selling Section */}
-      <TrustSection />
+      {/* 10. Become a Seller (Recruitment with registration CTA) */}
+      <BecomeSellerCTA />
+
+      {/* 11. Frequently Asked Questions */}
+      <FAQSection />
     </div>
   );
 }

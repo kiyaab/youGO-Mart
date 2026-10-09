@@ -8,9 +8,9 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   login: (data: { email: string; password: string }) => Promise<void>;
+  loginWithGoogle: (data: { email: string; name?: string; role?: 'buyer' | 'seller'; store_name?: string; phone?: string; city?: string }) => Promise<void>;
   register: (data: any) => Promise<void>;
   logout: () => Promise<void>;
-  switchDemo: (role: 'buyer' | 'seller' | 'admin') => Promise<void>;
   refreshUser: () => Promise<void>;
   isAuthenticated: boolean;
 }
@@ -19,9 +19,9 @@ const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
   login: async () => {},
+  loginWithGoogle: async () => {},
   register: async () => {},
   logout: async () => {},
-  switchDemo: async () => {},
   refreshUser: async () => {},
   isAuthenticated: false,
 });
@@ -65,6 +65,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const loginWithGoogle = async (data: { email: string; name?: string; role?: 'buyer' | 'seller'; store_name?: string; phone?: string; city?: string }) => {
+    const res = await api.auth.google(data);
+    if (res.token) {
+      localStorage.setItem('yougo_token', res.token);
+      setUser(res.user);
+    }
+  };
+
   const register = async (data: any) => {
     const res = await api.auth.register(data);
     if (res.token) {
@@ -83,23 +91,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
   };
 
-  const switchDemo = async (role: 'buyer' | 'seller' | 'admin') => {
-    const res = await api.auth.switchDemo(role);
-    if (res.token) {
-      localStorage.setItem('yougo_token', res.token);
-      setUser(res.user);
-    }
-  };
-
   return (
     <AuthContext.Provider
       value={{
         user,
         loading,
         login,
+        loginWithGoogle,
         register,
         logout,
-        switchDemo,
         refreshUser,
         isAuthenticated: !!user,
       }}

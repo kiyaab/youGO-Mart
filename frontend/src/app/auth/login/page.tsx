@@ -13,7 +13,7 @@ function LoginFormContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectPath = searchParams.get('redirect');
-  const { login } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const { language, t } = useLanguage();
 
   const [email, setEmail] = useState('');
@@ -44,8 +44,6 @@ function LoginFormContent() {
     setGoogleLoading(true);
     setError(null);
     try {
-      // In web app, triggers Google OAuth flow
-      // Fallback: automatically prompts or logs into user session
       const promptEmail = window.prompt(
         language === 'am'
           ? 'የጉግል መለያ ኢሜይልዎን ያስገቡ:'
@@ -53,7 +51,7 @@ function LoginFormContent() {
         'user@gmail.com'
       );
       if (promptEmail) {
-        await login({ email: promptEmail, password: 'GoogleAuthSecure2026!' });
+        await loginWithGoogle({ email: promptEmail, name: promptEmail.split('@')[0] });
         router.push(redirectPath || '/dashboard');
       }
     } catch {
