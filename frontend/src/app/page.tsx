@@ -3,22 +3,14 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Hero } from '@/components/home/Hero';
-import { ExploreMarketplaceSection } from '@/components/home/ExploreMarketplaceSection';
-import { HowItWorksSection } from '@/components/home/HowItWorksSection';
-import { ForBuyersSection } from '@/components/home/ForBuyersSection';
-import { ForSellersSection } from '@/components/home/ForSellersSection';
-import { WhyYouGoMartSection } from '@/components/home/WhyYouGoMartSection';
-import { CategoryGrid } from '@/components/home/CategoryGrid';
-import { BecomeSellerCTA } from '@/components/home/BecomeSellerCTA';
-import { FAQSection } from '@/components/home/FAQSection';
+import { LandingSections } from '@/components/home/LandingSections';
+import { PlatformPortfolio } from '@/components/home/PlatformPortfolio';
 import { ListingCard } from '@/components/listing/ListingCard';
 import { api } from '@/lib/api';
-import { useLanguage } from '@/lib/language-context';
 import { Category, ListingCard as ListingCardType } from '@/types';
-import { Sparkles, ArrowRight, Clock, ShoppingBag } from 'lucide-react';
+import { Sparkles, ArrowRight, Clock, PlusCircle } from 'lucide-react';
 
 export default function HomePage() {
-  const { language, t } = useLanguage();
   const [categories, setCategories] = useState<Category[]>([]);
   const [featuredListings, setFeaturedListings] = useState<ListingCardType[]>([]);
   const [recentListings, setRecentListings] = useState<ListingCardType[]>([]);
@@ -27,16 +19,16 @@ export default function HomePage() {
   useEffect(() => {
     async function loadData() {
       try {
-        const [cats, feat, rec] = await Promise.allSettled([
+        const [cats, feat, rec] = await Promise.all([
           api.categories.getAll(),
           api.listings.getFeatured(),
           api.listings.getRecent(),
         ]);
-        if (cats.status === 'fulfilled') setCategories(cats.value || []);
-        if (feat.status === 'fulfilled') setFeaturedListings(feat.value || []);
-        if (rec.status === 'fulfilled') setRecentListings(rec.value || []);
+        setCategories(cats || []);
+        setFeaturedListings(feat || []);
+        setRecentListings(rec || []);
       } catch (err) {
-        console.error('Failed to load homepage data:', err);
+        console.error('Failed to load marketplace data:', err);
       } finally {
         setLoading(false);
       }
@@ -46,14 +38,19 @@ export default function HomePage() {
 
   return (
     <div>
-      {/* 1. Hero Section */}
+      {/* 1. Homepage Hero Section */}
       <Hero />
 
-      {/* 2. Explore the Marketplace (Discovery, Search, Filtering) */}
-      <ExploreMarketplaceSection />
+      {/* 2. Public Marketplace Landing Sections (All 9 Modules) */}
+      <LandingSections categories={categories} />
 
-      {/* 3. Real Product Highlights (Featured Listings) */}
-      <section className="py-5" style={{ backgroundColor: '#FFF7F0' }}>
+      {/* 3. Deep In-Depth Platform Portfolio & Dual Role Registration */}
+      <div id="about-us">
+        <PlatformPortfolio />
+      </div>
+
+      {/* 4. Live Featured Listings Section */}
+      <section className="py-5" style={{ backgroundColor: 'var(--bg-card)' }}>
         <div className="container">
           <div className="d-flex align-items-center justify-content-between mb-4">
             <div className="d-flex align-items-center gap-2">
@@ -61,21 +58,19 @@ export default function HomePage() {
                 className="p-2 rounded-3 text-warning"
                 style={{ backgroundColor: 'var(--primary-orange-light)' }}
               >
-                <Sparkles size={22} />
+                <Sparkles size={22} style={{ color: 'var(--primary-orange)' }} />
               </div>
               <div>
                 <h3 className="fw-bold m-0" style={{ letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
-                  {language === 'am' ? 'ተለይተው የቀረቡ እቃዎች' : 'Featured Marketplace Deals'}
+                  Featured Products
                 </h3>
                 <p className="text-muted small m-0">
-                  {language === 'am'
-                    ? 'በአዲስ አበባ እና በኢትዮጵያ ውስጥ ያሉ የተረጋገጡ ቅናሾች'
-                    : 'Hand-picked spotlights and verified listings in Addis Ababa'}
+                  Verified deals from local merchants across Ethiopia
                 </p>
               </div>
             </div>
             <Link href="/search?promoted=true" className="btn btn-neutral btn-sm px-3 fw-semibold">
-              {language === 'am' ? 'ሁሉንም እይ' : 'View All'} →
+              View All Featured →
             </Link>
           </div>
 
@@ -83,9 +78,10 @@ export default function HomePage() {
             <div className="row g-3">
               {[1, 2, 3, 4].map((i) => (
                 <div key={i} className="col-12 col-sm-6 col-lg-3">
-                  <div className="glass-card p-3" style={{ height: '320px', opacity: 0.6 }}>
-                    <div className="bg-secondary bg-opacity-25 w-100 rounded mb-3" style={{ height: '180px' }} />
-                    <div className="bg-secondary bg-opacity-25 w-75 rounded mb-2" style={{ height: '20px' }} />
+                  <div className="yg-card p-3" style={{ height: '320px', opacity: 0.6 }}>
+                    <div className="bg-secondary bg-opacity-10 w-100 rounded mb-3" style={{ height: '180px' }} />
+                    <div className="bg-secondary bg-opacity-10 w-75 rounded mb-2" style={{ height: '20px' }} />
+                    <div className="bg-secondary bg-opacity-10 w-50 rounded" style={{ height: '16px' }} />
                   </div>
                 </div>
               ))}
@@ -100,62 +96,46 @@ export default function HomePage() {
             </div>
           ) : (
             <div className="glass-card p-5 text-center rounded-4">
-              <ShoppingBag size={36} className="text-muted opacity-40 mb-2" />
-              <p className="text-muted small m-0">
-                {t('no_products_yet')}
-              </p>
+              <p className="text-muted m-0">No promoted featured listings at this moment. Discover recent items below!</p>
             </div>
           )}
         </div>
       </section>
 
-      {/* 4. How It Works (Clear steps for buyers & sellers) */}
-      <HowItWorksSection />
-
-      {/* 5. For Buyers Section (Wishlists, Carts, Order Tracking) */}
-      <ForBuyersSection />
-
-      {/* 6. For Sellers Section (Store Creation, Inventory, Real Analytics) */}
-      <ForSellersSection />
-
-      {/* 7. Why youGO-mart (Actual platform advantages, 0% commission) */}
-      <WhyYouGoMartSection />
-
-      {/* 8. Popular Categories (From real database) */}
-      <CategoryGrid categories={categories} />
-
-      {/* 9. Fresh Recent Listings */}
-      <section className="py-5" style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid var(--border-color)' }}>
+      {/* 5. Live Recent Listings Section */}
+      <section className="py-5" style={{ backgroundColor: 'var(--bg-soft)' }}>
         <div className="container">
           <div className="d-flex align-items-center justify-content-between mb-4">
             <div className="d-flex align-items-center gap-2">
               <div
-                className="p-2 rounded-3 text-warning"
-                style={{ backgroundColor: 'var(--primary-orange-light)' }}
+                className="p-2 rounded-3 text-primary"
+                style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)' }}
               >
-                <Clock size={22} />
+                <Clock size={22} style={{ color: '#2563EB' }} />
               </div>
               <div>
                 <h3 className="fw-bold m-0" style={{ letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
-                  {language === 'am' ? 'በቅርብ ጊዜ የተጨመሩ እቃዎች' : 'Recently Published Products'}
+                  Fresh Marketplace Uploads
                 </h3>
                 <p className="text-muted small m-0">
-                  {language === 'am'
-                    ? 'በመጨረሻዎቹ ሰዓታት የተጨመሩ አዳዲስ እቃዎች'
-                    : 'Freshly listed merchandise from verified merchants across Ethiopia'}
+                  New authentic products published by local sellers
                 </p>
               </div>
             </div>
             <Link href="/search" className="btn btn-neutral btn-sm px-3 fw-semibold">
-              {language === 'am' ? 'ሁሉንም ፈልግ' : 'Browse All'} →
+              Browse All ({recentListings.length}) →
             </Link>
           </div>
 
           {loading ? (
             <div className="row g-3">
-              {[1, 2, 3, 4].map((i) => (
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
                 <div key={i} className="col-12 col-sm-6 col-lg-3">
-                  <div className="glass-card p-3" style={{ height: '320px', opacity: 0.6 }} />
+                  <div className="yg-card p-3" style={{ height: '320px', opacity: 0.6 }}>
+                    <div className="bg-secondary bg-opacity-10 w-100 rounded mb-3" style={{ height: '180px' }} />
+                    <div className="bg-secondary bg-opacity-10 w-75 rounded mb-2" style={{ height: '20px' }} />
+                    <div className="bg-secondary bg-opacity-10 w-50 rounded" style={{ height: '16px' }} />
+                  </div>
                 </div>
               ))}
             </div>
@@ -169,17 +149,20 @@ export default function HomePage() {
             </div>
           ) : (
             <div className="glass-card p-5 text-center rounded-4">
-              <p className="text-muted small m-0">{t('no_products_yet')}</p>
+              <p className="text-muted m-0">The marketplace is waiting for its first products. Be the first to publish a listing!</p>
+              <Link href="/post-ad" className="btn-orange px-4 py-2 mt-3">
+                <PlusCircle size={16} /> Post Free Ad
+              </Link>
             </div>
           )}
+
+          <div className="text-center mt-5">
+            <Link href="/search" className="btn-orange px-5 py-3">
+              Explore All Marketplace Items <ArrowRight size={18} />
+            </Link>
+          </div>
         </div>
       </section>
-
-      {/* 10. Become a Seller (Recruitment with registration CTA) */}
-      <BecomeSellerCTA />
-
-      {/* 11. Frequently Asked Questions */}
-      <FAQSection />
     </div>
   );
 }

@@ -50,8 +50,6 @@ export const api = {
       apiRequest('/auth/login/', { method: 'POST', body: JSON.stringify(data) }),
     register: (data: any) =>
       apiRequest('/auth/register/', { method: 'POST', body: JSON.stringify(data) }),
-    google: (data: { email: string; name?: string; role?: 'buyer' | 'seller'; store_name?: string; phone?: string; city?: string }) =>
-      apiRequest('/auth/google/', { method: 'POST', body: JSON.stringify(data) }),
     logout: () =>
       apiRequest('/auth/logout/', { method: 'POST' }),
     getCurrentUser: () =>
@@ -92,27 +90,6 @@ export const api = {
     report: (id: number, data: { reason: string; description: string; email?: string }) =>
       apiRequest(`/listings/${id}/report/`, { method: 'POST', body: JSON.stringify(data) }),
   },
-  cart: {
-    get: () => apiRequest('/shop/cart/'),
-    addItem: (listingId: number, quantity: number = 1) =>
-      apiRequest('/shop/cart/', { method: 'POST', body: JSON.stringify({ listing_id: listingId, quantity }) }),
-    updateQuantity: (itemId: number, quantity: number) =>
-      apiRequest(`/shop/cart/items/${itemId}/`, { method: 'PATCH', body: JSON.stringify({ quantity }) }),
-    removeItem: (itemId: number) =>
-      apiRequest(`/shop/cart/items/${itemId}/`, { method: 'DELETE' }),
-    clear: () =>
-      apiRequest('/shop/cart/', { method: 'DELETE' }),
-  },
-  orders: {
-    getAll: () => apiRequest('/shop/orders/'),
-    getById: (id: string | number) => apiRequest(`/shop/orders/${id}/`),
-    checkout: (data: any) =>
-      apiRequest('/shop/orders/', { method: 'POST', body: JSON.stringify(data) }),
-    getSellerOrders: () => apiRequest('/shop/seller/orders/'),
-    updateSellerItemStatus: (itemId: number, status: string) =>
-      apiRequest(`/shop/seller/orders/items/${itemId}/`, { method: 'PATCH', body: JSON.stringify({ fulfillment_status: status }) }),
-    getAdminOrders: () => apiRequest('/shop/admin/orders/'),
-  },
   seller: {
     getMyProfile: () => apiRequest('/sellers/profile/'),
     updateMyProfile: (data: any) =>
@@ -142,6 +119,29 @@ export const api = {
     getAll: () => apiRequest('/notifications/'),
     markRead: (id: number) => apiRequest(`/notifications/${id}/read/`, { method: 'PATCH' }),
     markAllRead: () => apiRequest('/notifications/read-all/', { method: 'POST' }),
+  },
+  cart: {
+    get: () => apiRequest('/cart/'),
+    addItem: (listingId: number, quantity = 1) =>
+      apiRequest('/cart/items/', { method: 'POST', body: JSON.stringify({ listing_id: listingId, quantity }) }),
+    updateQuantity: (itemId: number, quantity: number) =>
+      apiRequest(`/cart/items/${itemId}/`, { method: 'PATCH', body: JSON.stringify({ quantity }) }),
+    removeItem: (itemId: number) =>
+      apiRequest(`/cart/items/${itemId}/`, { method: 'DELETE' }),
+    clear: () =>
+      apiRequest('/cart/clear/', { method: 'POST' }),
+  },
+  orders: {
+    checkout: (data: any) =>
+      apiRequest('/orders/checkout/', { method: 'POST', body: JSON.stringify(data) }),
+    getMyOrders: () =>
+      apiRequest('/orders/'),
+    getOrderDetail: (orderNumber: string) =>
+      apiRequest(`/orders/detail/${orderNumber}/`),
+    getSellerOrders: () =>
+      apiRequest('/orders/seller/'),
+    updateFulfillment: (itemId: number, status: string) =>
+      apiRequest(`/orders/seller/items/${itemId}/`, { method: 'PATCH', body: JSON.stringify({ fulfillment_status: status }) }),
   },
   admin: {
     getMetrics: () => apiRequest('/admin/metrics/'),

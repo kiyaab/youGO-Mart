@@ -12,162 +12,102 @@ interface Translations {
 }
 
 export const translations: Translations = {
-  // Navigation
-  home: {
-    en: 'Home',
-    am: 'ዋና ገጽ',
+  // Brand & Tagline
+  tagline: {
+    en: 'Discover More. Shop Smarter. Go Further.',
+    am: 'የበለጠ ያግኙ። በብልሃት ይሸምቱ። ወደፊት ይራመዱ።',
   },
-  explore_products: {
-    en: 'Explore Products',
-    am: 'ምርቶችን ያስሱ',
+  subtagline: {
+    en: 'Welcome to youGO-mart, your marketplace to discover products, connect with trusted sellers, and enjoy a simpler way to shop and grow your business.',
+    am: 'እንኳን ወደ ዩጎ-ማርት በደህና መጡ! ምርቶችን የሚያገኙበት፣ ከታመኑ ሻጮች ጋር የሚገናኙበት እና ንግድዎን የሚያሳድጉበት ዘመናዊ የገበያ መድረክ።',
   },
-  how_it_works: {
-    en: 'How It Works',
-    am: 'እንዴት እንደሚሰራ',
-  },
-  for_sellers: {
-    en: 'For Sellers',
-    am: 'ለሻጮች',
-  },
-  for_buyers: {
-    en: 'For Buyers',
-    am: 'ለገዢዎች',
-  },
-  about_us: {
-    en: 'About Us',
-    am: 'ስለ እኛ',
-  },
-  sign_in: {
-    en: 'Sign In',
-    am: 'ይግቡ',
-  },
-  get_started: {
-    en: 'Get Started',
-    am: 'ይጀምሩ',
-  },
-
-  // Hero Section
   hero_headline: {
     en: 'Discover More. Shop Smarter. Go Further.',
-    am: 'የበለጠ ይፈልጉ። በብልሃት ይሸምቱ። ወደ ፊት ይራመዱ።',
+    am: 'የበለጠ ያግኙ። በብልሃት ይሸምቱ። ወደፊት ይራመዱ።',
   },
-  hero_subheadline: {
+  hero_supporting: {
     en: 'Welcome to youGO-mart, your marketplace to discover products, connect with trusted sellers, and enjoy a simpler way to shop and grow your business.',
-    am: 'ወደ ዩጎ-ማርት እንኳን በደህና መጡ! ጥራት ያላቸውን ምርቶች ለማግኘት፣ ከታመኑ ሻጮች ጋር በቀጥታ ለመገናኘት እና ንግድዎን ለማሳደግ ቀላሉ የኢትዮጵያ ዲጂታል ገበያ።',
+    am: 'እንኳን ወደ ዩጎ-ማርት በደህና መጡ! ምርቶችን የሚያገኙበት፣ ከታመኑ ሻጮች ጋር የሚገናኙበት እና ንግድዎን የሚያሳድጉበት ዘመናዊ የገበያ መድረክ።',
   },
   start_shopping: {
     en: 'Start Shopping',
-    am: 'መሸመት ጀምር',
+    am: 'መሸመት ይጀምሩ',
   },
   become_a_seller: {
     en: 'Become a Seller',
     am: 'ሻጭ ይሁኑ',
   },
 
-  // Brand Values
-  zero_commission: {
-    en: '0% Sales Commission',
-    am: '0% የሽያጭ ኮሚሽን',
+  // Navbar Links
+  nav_home: {
+    en: 'Home',
+    am: 'መነሻ',
   },
-  ethiopia_first: {
-    en: 'Ethiopia First 🇪🇹',
-    am: 'ቅድሚያ ለኢትዮጵያ 🇪🇹',
+  nav_explore: {
+    en: 'Explore Products',
+    am: 'ምርቶችን ያስሱ',
   },
-  direct_connection: {
-    en: 'Direct Buyer & Seller Deals',
-    am: 'ቀጥታ የገዢ እና የሻጭ ግንኙነት',
+  nav_how_it_works: {
+    en: 'How It Works',
+    am: 'እንዴት እንደሚሰራ',
   },
+  nav_for_sellers: {
+    en: 'For Sellers',
+    am: 'ለሻጮች',
+  },
+  nav_about_us: {
+    en: 'About Us',
+    am: 'ስለ እኛ',
+  },
+  nav_get_started: {
+    en: 'Get Started',
+    am: 'ይጀምሩ',
+  },
+  nav_sign_in: {
+    en: 'Sign In',
+    am: 'ይግቡ',
+  },
+
+  // Marketplace & Search
   search_placeholder: {
-    en: 'Search products, electronics, cars, fashion across Ethiopia...',
-    am: 'ምርቶችን፣ ስልኮች፣ መኪናዎች፣ አልባሳት ይፈልጉ...',
+    en: 'Search genuine products across Addis Ababa and Ethiopia...',
+    am: 'በአዲስ አበባ እና በኢትዮጵያ እውነተኛ ምርቶችን ይፈልጉ...',
   },
-  search_btn: {
-    en: 'Search',
-    am: 'ፈልግ',
-  },
-
-  // Roles & Portals
-  seller_hub: {
-    en: 'Seller Workspace',
-    am: 'የሻጭ የስራ ገጽ',
-  },
-  buyer_hub: {
-    en: 'Buyer Dashboard',
-    am: 'የገዢ ዳሽቦርድ',
-  },
-  admin_portal: {
-    en: 'Administrator Console',
-    am: 'የአስተዳዳሪ ኮንሶል',
-  },
-  join_as_seller: {
-    en: 'Register as Seller',
-    am: 'እንደ ሻጭ ይመዝገቡ',
-  },
-  join_as_buyer: {
-    en: 'Continue as a Buyer',
-    am: 'እንደ ገዢ ይቀጥሉ',
-  },
-  continue_with_google: {
-    en: 'Continue with Google',
-    am: 'በ Google ይቀጥሉ',
-  },
-
-  // E-Commerce Features
-  shopping_cart: {
-    en: 'Shopping Cart',
-    am: 'የግዢ ጋሪ',
-  },
-  cart_empty: {
-    en: 'Your shopping cart is empty',
-    am: 'የግዢ ጋሪዎ ባዶ ነው',
-  },
-  add_to_cart: {
-    en: 'Add to Cart',
-    am: 'ወደ ጋሪ ጨምር',
-  },
-  buy_now: {
-    en: 'Order Now',
-    am: 'አሁን እዘዝ',
-  },
-  checkout: {
-    en: 'Proceed to Checkout',
-    am: 'ትዕዛዝ ያጠናቁ',
-  },
-  orders: {
-    en: 'My Orders',
-    am: 'የእኔ ትዕዛዞች',
-  },
-  order_tracking: {
-    en: 'Order Tracking',
-    am: 'የትዕዛዝ ሁኔታ ክትትል',
+  cart: {
+    en: 'Cart',
+    am: 'ቅርጫት',
   },
   wishlist: {
     en: 'Wishlist',
-    am: 'የተመረጡ እቃዎች',
+    am: 'የተወደዱ',
   },
-  my_store: {
-    en: 'My Store',
-    am: 'የእኔ ሱቅ',
+  favorites: {
+    en: 'Favorites',
+    am: 'የተመረጡ',
   },
-  inventory: {
-    en: 'Inventory',
-    am: 'የእቃ ክምችት',
+  messages: {
+    en: 'Messages',
+    am: 'መልዕክቶች',
   },
-  sales_analytics: {
-    en: 'Sales Analytics',
-    am: 'የሽያጭ ትንተና',
+  orders: {
+    en: 'My Orders',
+    am: 'ትዕዛዞቼ',
   },
-  notifications: {
-    en: 'Notifications',
-    am: 'ማሳወቂያዎች',
+  order_tracking: {
+    en: 'Order Tracking',
+    am: 'ትዕዛዝ መከታተያ',
   },
-  settings: {
-    en: 'Settings',
-    am: 'ቅንብሮች',
+  seller_hub: {
+    en: 'Seller Hub',
+    am: 'የሻጭ ዳሽቦርድ',
   },
-  help_support: {
-    en: 'Help & Support',
-    am: 'እርዳታ እና ድጋፍ',
+  buyer_hub: {
+    en: 'Buyer Portal',
+    am: 'የገዢ ገጽ',
+  },
+  admin_portal: {
+    en: 'Admin Security Portal',
+    am: 'የአስተዳዳሪ ፖርታል',
   },
   sign_out: {
     en: 'Sign Out',
@@ -175,73 +115,73 @@ export const translations: Translations = {
   },
 
   // Landing Page Sections
-  explore_marketplace_title: {
+  explore_section_title: {
     en: 'Explore the Marketplace',
-    am: 'ገበያውን ያስሱ',
+    am: 'የገበያ ቦታውን ያስሱ',
   },
-  explore_marketplace_desc: {
-    en: 'Discover thousands of items listed by genuine sellers across Addis Ababa and all Ethiopian cities.',
-    am: 'በአዲስ አበባ እና በሁሉም የኢትዮጵያ ከተሞች ካሉ እውነተኛ ሻጮች የቀረቡ በሺዎች የሚቆጠሩ እቃዎችን ያግኙ።',
+  explore_section_desc: {
+    en: 'Smart discovery with verified filters, transparent pricing, and direct communication across Ethiopian subcities.',
+    am: 'በተረጋገጡ ማጣሪያዎች፣ ግልጽ ዋጋዎች እና በቀጥታ ግንኙነት በመላው የኢትዮጵያ ክፍለ ከተሞች የሚፈልጉትን ያግኙ።',
   },
   how_it_works_title: {
-    en: 'How youGO-mart Works',
-    am: 'ዩጎ-ማርት እንዴት ይሰራል?',
+    en: 'How It Works',
+    am: 'እንዴት እንደሚሰራ',
+  },
+  for_buyers_title: {
+    en: 'For Buyers',
+    am: 'ለገዢዎች',
+  },
+  for_sellers_title: {
+    en: 'For Sellers',
+    am: 'ለሻጮች',
   },
   why_yougo_title: {
-    en: 'Why Choose youGO-mart',
-    am: 'ለምን ዩጎ-ማርትን ይመርጣሉ?',
+    en: 'Why youGO-mart',
+    am: 'ለምን ዩጎ-ማርት?',
   },
   popular_categories_title: {
-    en: 'Popular Product Categories',
-    am: 'ተወዳጅ የምርት ምድቦች',
-  },
-  become_seller_title: {
-    en: 'Ready to Grow Your Business?',
-    am: 'ንግድዎን ለማሳደግ ዝግጁ ነዎት?',
-  },
-  become_seller_desc: {
-    en: 'Join hundreds of Ethiopian merchants selling smartphones, vehicles, fashion, and home electronics with 0% commission cuts.',
-    am: 'ስልኮችን፣ መኪናዎችን፣ አልባሳትን እና የኤሌክትሮኒክስ እቃዎችን ያለ ምንም የኮሚሽን ቅናሽ ከሚሸጡ በመቶዎች ከሚቆጠሩ ነጋዴዎች ጋር ይቀላቀሉ።',
+    en: 'Popular Categories',
+    am: 'ተወዳጅ ምድቦች',
   },
   faq_title: {
     en: 'Frequently Asked Questions',
     am: 'ተደጋግመው የሚጠየቁ ጥያቄዎች',
   },
 
-  // Empty States (Strictly Honest, No Fake Data)
-  no_products_yet: {
-    en: 'The marketplace is preparing genuine products for you. Check back shortly or be the first to publish!',
-    am: 'ገበያው ጥራት ያላቸውን ምርቶች በማዘጋጀት ላይ ነው። በቅርቡ ይመለሱ ወይም የመጀመሪያው ሻጭ ይሁኑ!',
+  // Auth & Roles
+  continue_as_buyer: {
+    en: 'Continue as a Buyer',
+    am: 'እንደ ገዢ ይቀጥሉ',
   },
-  no_orders_yet: {
-    en: 'No orders placed yet. Explore products and start shopping today.',
-    am: 'እስካሁን ምንም ትዕዛዝ አልተሰጠም። ምርቶችን ያስሱ እና ዛሬ መሸመት ይጀምሩ።',
+  register_as_seller: {
+    en: 'Register as a Seller',
+    am: 'እንደ ሻጭ ይመዝገቡ',
   },
-  no_wishlist_yet: {
-    en: 'Your wishlist is empty. Tap the heart icon on any product to save it.',
-    am: 'የተመረጡ እቃዎች ዝርዝር ባዶ ነው። ምርቶችን ለማስቀመጥ የልብ ምልክቱን ይጫኑ።',
+  continue_with_google: {
+    en: 'Continue with Google',
+    am: 'በጉግል (Google) ይቀጥሉ',
   },
-  add_first_product: {
-    en: 'Add Your First Product',
-    am: 'የመጀመሪያ ምርትዎን ይጨምሩ',
+  zero_commission_badge: {
+    en: '0% Sales Commission • Free Postings',
+    am: '0% የሽያጭ ኮሚሽን • ነፃ ማስታወቂያ',
   },
 
-  // Role Security
+  // Access control
   access_restricted: {
     en: 'Access Restricted',
     am: 'ይህ ገጽ ለእርስዎ የተከለከለ ነው',
   },
   seller_only_notice: {
-    en: 'This section is reserved exclusively for registered Sellers. As a Buyer, please access your shopping dashboard.',
-    am: 'ይህ ክፍል ለተመዘገቡ ሻጮች ብቻ የተዘጋጀ ነው። እንደ ገዢ፣ እባክዎ ወደ ግዢ ዳሽቦርድዎ ይሂዱ።',
+    en: 'This workspace is strictly reserved for approved Sellers. You are currently logged in with a Buyer account.',
+    am: 'ይህ የስራ ቦታ ለተፈቀደላቸው ሻጮች ብቻ የተወሰነ ነው። እርስዎ በገዢ አካውንት ገብተዋል።',
   },
   buyer_only_notice: {
-    en: 'This section is reserved exclusively for Buyers. As a Merchant, manage your store and inventory in the Seller Workspace.',
-    am: 'ይህ ክፍል ለገዢዎች ብቻ የተዘጋጀ ነው። እንደ ነጋዴ፣ ሱቅዎን እና እቃዎችዎን በሻጭ የስራ ገጽ ያስተዳድሩ።',
+    en: 'This portal is strictly reserved for Buyers. As a registered Merchant, please manage your store in the Seller Hub.',
+    am: 'ይህ ገጽ ለገዢዎች ብቻ የተዘጋጀ ነው። እንደ ነጋዴ እባክዎ ሱቅዎን በሻጭ ዳሽቦርድ ያስተዳድሩ።',
   },
   admin_only_notice: {
-    en: 'Security Alert: Only verified administrators with authorized credentials can enter this console.',
-    am: 'የደህንነት ማስጠንቀቂያ፡ የተረጋገጡ የአስተዳዳሪ ምስክር ወረቀት ያላቸው ብቻ ወደዚህ ኮንሶል መግባት ይችላሉ።',
+    en: 'Strict Security Zone: Authorized Administrator Credentials Required.',
+    am: 'ጥብቅ የደህንነት ክልል፡ የተፈቀደ የአስተዳዳሪ ምስክር ወረቀት ያስፈልጋል።',
   },
 };
 

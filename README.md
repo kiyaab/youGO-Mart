@@ -1,224 +1,185 @@
-# youGO-mart — Premium E-Commerce Marketplace 🇪🇹
+# youGO-mart 🇪🇹
 
-**A modern, production-ready, bilingual e-commerce marketplace connecting buyers and sellers across Ethiopia and Africa through an intuitive, trustworthy, and secure shopping experience.**
+**Premium Bilingual E-Commerce Marketplace & Direct Connection Platform for Ethiopia**
 
-* **Brand:** youGO-mart
-* **Founder:** Endegena Abebe
-* **Official Repository:** [https://github.com/kiyaab/youGO-Mart.git](https://github.com/kiyaab/youGO-Mart.git)
-* **Design Identity:** Clean Orange & White Glassmorphism with Strict No-Demo Standard
-* **Supported Languages:** English & Amharic (አማርኛ)
+* **Founder:** Endegena Abebe  
+* **Brand:** youGO-mart  
+* **Brand Colors:** Primary Orange (`#F97316`), Supporting Orange (`#EA580C`), Pure White (`#FFFFFF`), Soft Background (`#FFF7F0`), Light Neutral (`#F5F5F5`)  
+* **Launch Market:** Ethiopia (Addis Ababa, Hawassa, Adama, Bahir Dar, Dire Dawa, Mekelle)  
+* **Languages:** English & Amharic (አማርኛ)  
+* **Currency:** Ethiopian Birr (ETB)  
 
 ---
 
 ## 1. Brand Identity & Design System
 
-The visual design system strictly follows youGO-mart's curated brand palette:
-
-* **Primary Orange:** `#F97316`
-* **White:** `#FFFFFF`
-* **Soft Background:** `#FFF7F0`
-* **Light Neutral:** `#F5F5F5`
-* **Supporting Orange:** `#EA580C`
-* **Dark / Black backgrounds are strictly avoided** to maintain an airy, warm, inviting, and trustworthy e-commerce aesthetic.
-
-Key design elements:
-* **Floating Glassmorphism Navbar:** Translucent background (`rgba(255, 255, 255, 0.85)`), backdrop blur (`blur(16px)`), subtle border, and rounded corners.
-* **Modern Typography & Spacing:** Inter / Outfit typography, generous whitespace, soft rounded corners (`rounded-2xl`).
-* **Subtle Framer Motion Animations:** Smooth page transitions, staggered hero cards, and reduced-motion accessibility support.
-* **Polished Empty States & Micro-Interactions:** Honest empty states when items or orders are not yet present—no artificial statistics or mock data.
+youGO-mart implements a distinctive orange-and-white visual identity:
+* **Primary Orange (`#F97316`) & Supporting Orange (`#EA580C`):** High-energy brand accents.
+* **Pure White (`#FFFFFF`) & Soft Background (`#FFF7F0`):** Clean, generous whitespace.
+* **Light Neutral (`#F5F5F5`):** Subtle borders and card surfaces. Zero dark-heavy themes or unnecessary gradients.
+* **Floating Glassy Navbar:** Translucent blur backdrop (`backdrop-filter: blur(12px)`), rounded pill controls, bilingual language switcher (`EN | አማ`), and sticky elevation.
+* **Strict No-Demo Policy:** Zero fake accounts, zero artificial reviews, zero hardcoded statistics. Clean, encouraging empty states when records are newly initialized.
 
 ---
 
-## 2. Platform Architecture
+## 2. Full-Stack Architecture
 
-```
-youGO-Mart/
-├── backend/
-│   ├── apps/
-│   │   ├── accounts/      # User model, Google OAuth, JWT/Token auth & RBAC
-│   │   ├── profiles/      # User profile, location, preferences
-│   │   ├── sellers/       # Seller profile, verification, business data
-│   │   ├── categories/    # Hierarchical product category taxonomy
-│   │   ├── listings/      # Product listings, images, pricing, conditions
-│   │   ├── orders/        # Shopping Cart, Cart Items, Orders, Order Items, Fulfillment
-│   │   ├── favorites/     # Wishlists & saved items
-│   │   ├── messaging/     # Buyer-to-seller private communications
-│   │   ├── notifications/ # Event-driven notifications
-│   │   ├── moderation/    # Content reporting & review queue
-│   │   ├── promotions/    # Spotlight & promoted placements
-│   │   └── core/          # Admin bootstrap management commands & core utils
-│   ├── yougo_core/        # Django settings, WSGI, ASGI, root URLs
-│   ├── manage.py
-│   └── requirements.txt
-│
-└── frontend/
-    ├── src/
-    │   ├── app/
-    │   │   ├── page.tsx               # Homepage with 9 comprehensive landing sections
-    │   │   ├── about-us/              # Dedicated About youGO-mart story & vision
-    │   │   ├── for-sellers/           # Seller recruitment & onboarding overview
-    │   │   ├── how-it-works/          # Step-by-step buyer & seller marketplace guide
-    │   │   ├── buyer/dashboard/       # Dedicated Buyer workspace (Cart, Orders, Wishlist)
-    │   │   ├── seller/dashboard/      # Dedicated Seller workspace (Products, Inventory, Orders)
-    │   │   ├── admin-portal/          # Secured Administrator Control Center
-    │   │   ├── auth/login/            # Sign In with Google OAuth & Email
-    │   │   ├── auth/register/         # Distinct Buyer & Seller registration pathways
-    │   │   ├── search/                # Product discovery & filter search
-    │   │   └── listings/[slug]/       # Product detail page
-    │   ├── components/
-    │   │   ├── layout/Navbar.tsx      # Floating glassmorphic navigation bar
-    │   │   ├── layout/Footer.tsx      # Bilingual footer with policies & controls
-    │   │   └── home/                  # 9 modular landing sections
-    │   └── lib/
-    │       ├── api.ts                 # Full DRF API client with Cart & Orders support
-    │       ├── auth-context.tsx       # Auth provider with Google OAuth & RBAC
-    │       └── language-context.tsx   # Bilingual English & Amharic i18n dictionary
-    ├── package.json
-    └── next.config.ts
-```
+### Frontend (`frontend/`)
+* **Framework:** Next.js 16 (App Router) with React 19 and TypeScript (Strict Mode)
+* **Bundler & Build Engine:** Turbopack (Optimized production static generation for all routes)
+* **Styling:** Custom CSS design system with CSS custom properties (`globals.css`)
+* **State & Authentication:** React Context (`auth-context.tsx`, `language-context.tsx`)
+* **Icons:** Lucide Icons
+* **Bilingual Localization:** English and Amharic dictionaries for navigation, dashboards, checkout, and safety guides
+
+### Backend (`backend/`)
+* **Framework:** Python 3.11 + Django 5.1 + Django REST Framework
+* **Database:** SQLite (default for development) / PostgreSQL (production configured)
+* **Authentication:** Token authentication + Google OAuth endpoint (`/api/v1/auth/google/`)
+* **Interactive API Documentation:** OpenAPI 3.0 & Swagger UI at `/api/docs/`
+* **Modular Applications:**
+  * `accounts`: Custom User model with email authentication & strict RBAC (`buyer`, `seller`, `admin`).
+  * `profiles`: UserProfile with Ethiopian cities and language preferences.
+  * `sellers`: SellerProfile and SellerVerification (Kebele / Business License moderation queue).
+  * `categories`: Taxonomy with active product count annotations.
+  * `listings`: Real product listings with image uploads, status workflow, and slug generation.
+  * `orders`: Shopping Cart (`Cart`, `CartItem`) and Order Processing (`Order`, `OrderItem`) with server-side pricing validation and fulfillment management.
+  * `messaging`: Real-time buyer-to-seller private conversations.
+  * `notifications`: In-app notification alerts for orders, approvals, and reviews.
+  * `moderation`: Administrative controls, community abuse reporting, and immutable audit logs.
+  * `core`: Management commands, including `bootstrap_admin`.
 
 ---
 
 ## 3. Strict Role-Based Access Control (RBAC)
 
-The platform strictly enforces three distinct roles validated on the server:
+The platform enforces three distinct, non-overlapping roles:
 
 1. **`BUYER`**:
-   * Access to shopping cart, checkout, order tracking, wishlist, order history, and account profile.
-   * **Strictly blocked** from seller inventory, seller analytics, and administrative tools.
+   * Access to public marketplace, search, product details, favorites.
+   * Dedicated Buyer Dashboard: Wishlist, Shopping Cart, Checkout, Order Tracking, Profile.
+   * Strictly blocked from seller management and administrative consoles.
+
 2. **`SELLER`**:
-   * Access to store management, product creation, stock updates, fulfillment of received order items, and sales analytics derived from database records.
-   * **Strictly blocked** from buyer-only dashboards and administrative control tools.
+   * Access to dedicated Seller Hub: Store Profile, Product Inventory, Order Fulfillment status (`processing`, `shipped`, `delivered`), Sales Analytics, Customer inquiries.
+   * Strictly blocked from buyer checkout dashboards and administrative portals.
+
 3. **`ADMIN`**:
-   * Full platform oversight: user account management, seller application reviews, product moderation, category management, order oversight, and audit logs.
-   * **Strictly protected:** No public sign-up for admins. Admins can only be provisioned through server-side CLI management command.
+   * Dedicated private Administrative Console (`/admin-portal`).
+   * Platform oversight, user suspension/activation, seller verification badge review, product moderation, and audit logs.
+   * Protected by server-side credential challenges; cannot be claimed through public registration or OAuth.
 
 ---
 
-## 4. Strict No-Demo Policy
-
-In accordance with startup standards:
-* **Zero Demo Accounts:** No fake accounts, no pre-filled demo logins, no demo switchers.
-* **Zero Fabricated Reviews or Ratings:** Testimonials and reviews are not fabricated.
-* **Zero Hardcoded Statistics:** All metrics in seller and admin dashboards are calculated directly from active database records.
-* **Honest Empty States:** When a buyer has no orders or a seller has no products, intuitive empty states provide clear calls to action (e.g., *"Your shopping cart is currently empty. Explore our verified marketplace products."*).
-
----
-
-## 5. Google OAuth Authentication & Registration
-
-The platform supports genuine Google OAuth authentication:
-
-* **Buyer Registration Pathway:**
-  1. Selects "Continue as a Buyer".
-  2. Authenticates with Google.
-  3. Server automatically creates or links a Buyer account and redirects to `/buyer/dashboard`.
-
-* **Seller Registration Pathway:**
-  1. Selects "Register as a Seller".
-  2. Authenticates with Google.
-  3. Completes seller onboarding (store name, phone, city, business category).
-  4. Server creates a Seller profile in `pending` verification status.
-  5. Redirects to `/seller/dashboard`.
-
-* **Security Guard:** Google OAuth endpoints explicitly sanitize the role parameter, ensuring the `admin` role can **never** be claimed via client input.
-
----
-
-## 6. Secure Administrator Provisioning
-
-Administrator accounts cannot be created via public registration. Provision the first administrator securely using the Django management command:
-
-```bash
-# In backend directory
-python manage.py bootstrap_admin --email admin@yougomart.et --password "YourStrongPassword2026!" --username leadadmin
-```
-
-Or set environment variables in `backend/.env`:
-```env
-ADMIN_EMAIL=admin@yougomart.et
-ADMIN_PASSWORD=YourStrongPassword2026!
-ADMIN_USERNAME=leadadmin
-```
-and execute:
-```bash
-python manage.py bootstrap_admin
-```
-
----
-
-## 7. Dual-Language System: English & Amharic (አማርኛ)
-
-The platform features complete bilingual localization via `language-context.tsx`:
-* Floating glassmorphic navbar language switcher (English / አማርኛ).
-* Translated hero headlines, value propositions, and section headers.
-* Fully localized navigation tabs, button labels, and validation errors.
-* Localized buyer, seller, and administrator workspace actions.
-* Localized empty states, cart counters, and order statuses.
-* Preserves user language preference across sessions via `localStorage`.
-
----
-
-## 8. Local Setup & Running the Platform
+## 4. Quick Start & Local Setup
 
 ### Prerequisites
 * Python 3.10+
-* Node.js 18+ (tested with React 19 and Next.js 16)
-* Git
+* Node.js 18+ and npm
 
-### Step 1: Backend Setup
-```bash
-cd backend
-python -m venv venv
+### A. Backend Setup (Django)
 
-# On Windows:
-venv\Scripts\activate
-# On Linux/macOS:
-source venv/bin/activate
+1. Navigate to `backend`:
+   ```bash
+   cd backend
+   python -m venv venv
+   # Windows:
+   venv\Scripts\activate
+   # Linux/macOS:
+   source venv/bin/activate
 
-pip install -r requirements.txt
-python manage.py migrate
+   pip install -r requirements.txt
+   ```
 
-# Optional: seed authentic categories & sample verified listings
-python manage.py seed_yougo_data
+2. Run Database Migrations:
+   ```bash
+   python manage.py migrate
+   ```
 
-# Bootstrap an administrator
-python manage.py bootstrap_admin --email admin@yougomart.et --password "AdminPass2026!"
+3. Provision the Initial Administrator:
+   Admin accounts cannot be registered publicly. Provision staff credentials via the secure bootstrap command:
+   ```bash
+   python manage.py bootstrap_admin --email admin@yougomart.et --password "YourSecureAdminPassword2026!" --name "Platform Administrator"
+   ```
 
-# Start Django API server
-python manage.py runserver 127.0.0.1:8000
-```
-Backend API will be running at: `http://127.0.0.1:8000/api/v1/`  
-Swagger API Documentation: `http://127.0.0.1:8000/api/docs/`
+4. Start the Django Development Server:
+   ```bash
+   python manage.py runserver 127.0.0.1:8000
+   ```
+   * REST API: `http://127.0.0.1:8000/api/v1/`
+   * Swagger Docs: `http://127.0.0.1:8000/api/docs/`
 
-### Step 2: Frontend Setup
-```bash
-cd frontend
-npm install
-npm run dev
-```
-Frontend will be accessible at: `http://localhost:3000`
+### B. Frontend Setup (Next.js)
+
+1. Navigate to `frontend`:
+   ```bash
+   cd frontend
+   npm install
+   ```
+
+2. Start the Development Server:
+   ```bash
+   npm run dev
+   ```
+
+3. Open `http://localhost:3000` in your browser.
+
+4. Run Production Build Verification:
+   ```bash
+   npm run build
+   ```
 
 ---
 
-## 9. Automated Testing & Verification
+## 5. Google OAuth Configuration
 
-Comprehensive automated test suites cover authentication, role-based access control, cart calculations, checkout operations, and seller fulfillment:
+To configure production Google OAuth credentials:
 
-```bash
-# Run all backend unit tests:
-cd backend
-python manage.py test apps
-
-# Run frontend production build check:
-cd frontend
-npm run build
-```
-
-Both backend test suites (12 tests) and frontend builds (20 static/dynamic routes) pass with 100% success.
+1. Create a project in the [Google Cloud Console](https://console.cloud.google.com/).
+2. Create an **OAuth 2.0 Client ID** (Web application).
+3. Add authorized JavaScript origins:
+   * `http://localhost:3000`
+   * `https://yougomart.et`
+4. Add authorized redirect URIs:
+   * `http://localhost:3000/auth/callback`
+   * `https://yougomart.et/auth/callback`
+5. Configure your environment variables in `.env` (refer to `.env.example`).
+6. The backend endpoint `/api/v1/auth/google/` verifies Google credentials, assigns requested Buyer or onboarding Seller roles, and sanitizes role permissions to prevent unauthorized elevation to admin.
 
 ---
 
-## 10. License & Copyright
+## 6. Running Automated Tests
 
-© 2026 youGO-mart. Built with ❤️ for Ethiopia and Africa. All rights reserved.
+Run backend automated test suite across authentication, authorization, cart, orders, and core features:
+```bash
+cd backend
+python manage.py test apps.core apps.orders apps.accounts
+```
+Expected result: `Ran 12 tests ... OK`.
+
+---
+
+## 7. Application Routes
+
+| Route | Workspace | Description |
+|---|---|---|
+| `/` | Public | Master landing page: 9 sections, glassy navbar, real categories, search |
+| `/search` | Public | Multi-criteria product search with category, location, and price filters |
+| `/listings/[slug]` | Public | Product detail page with photos, direct contact (Call/WhatsApp), and Add-to-Cart |
+| `/how-it-works` | Public | Step-by-step marketplace guide for buyers and sellers |
+| `/for-sellers` | Public | Merchant showcase and seller registration gateway |
+| `/about-us` | Public | Founder statement and platform architectural vision |
+| `/auth/login` | Public | Secure credential and Google authentication login |
+| `/auth/register` | Public | Separate registration flows: Continue as Buyer or Register as Seller |
+| `/buyer/dashboard` | Buyer | Dedicated buyer workspace: Cart, Wishlist, Orders, Tracking, Profile |
+| `/seller/dashboard` | Seller | Dedicated seller hub: Products, Inventory, Orders, Analytics, Settings |
+| `/seller/verify` | Seller | Ethiopian Kebele / Business License verification portal |
+| `/admin-portal` | Admin | Private control center: User oversight, Verification, Moderation, Audit logs |
+
+---
+
+## 8. Founder Statement
+
+> *"youGO-mart was created to empower Ethiopian buyers and merchants with an authentic, modern, and completely commission-free marketplace. By eliminating middleman fees, offering dedicated buyer and seller hubs, and providing direct communication, we make digital commerce accessible, fair, and trustworthy for everyone across Ethiopia."*  
+> — **Endegena Abebe, Founder**
+

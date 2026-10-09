@@ -8,7 +8,6 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   login: (data: { email: string; password: string }) => Promise<void>;
-  loginWithGoogle: (data: { email: string; name?: string; role?: 'buyer' | 'seller'; store_name?: string; phone?: string; city?: string }) => Promise<void>;
   register: (data: any) => Promise<void>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
@@ -19,7 +18,6 @@ const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
   login: async () => {},
-  loginWithGoogle: async () => {},
   register: async () => {},
   logout: async () => {},
   refreshUser: async () => {},
@@ -65,14 +63,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const loginWithGoogle = async (data: { email: string; name?: string; role?: 'buyer' | 'seller'; store_name?: string; phone?: string; city?: string }) => {
-    const res = await api.auth.google(data);
-    if (res.token) {
-      localStorage.setItem('yougo_token', res.token);
-      setUser(res.user);
-    }
-  };
-
   const register = async (data: any) => {
     const res = await api.auth.register(data);
     if (res.token) {
@@ -97,7 +87,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         user,
         loading,
         login,
-        loginWithGoogle,
         register,
         logout,
         refreshUser,

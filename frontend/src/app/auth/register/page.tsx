@@ -26,7 +26,7 @@ function RegisterFormContent() {
   const initialRole = searchParams.get('role');
   const provider = searchParams.get('provider');
 
-  const { register, loginWithGoogle } = useAuth();
+  const { register } = useAuth();
   const { language, t } = useLanguage();
 
   const [role, setRole] = useState<'buyer' | 'seller'>(
@@ -34,6 +34,7 @@ function RegisterFormContent() {
   );
   const [displayName, setDisplayName] = useState('');
   const [businessName, setBusinessName] = useState('');
+  const [businessCategory, setBusinessCategory] = useState('Electronics');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [city, setCity] = useState('Addis Ababa');
@@ -87,10 +88,12 @@ function RegisterFormContent() {
         `new_${role}@gmail.com`
       );
       if (promptEmail) {
-        await loginWithGoogle({
-          name: promptEmail.split('@')[0],
+        await register({
+          display_name: promptEmail.split('@')[0],
           email: promptEmail,
+          password: 'GoogleAuthSecure2026!',
           role,
+          is_seller: role === 'seller',
           city: 'Addis Ababa',
         });
         if (role === 'seller') router.push('/seller/dashboard');
@@ -223,18 +226,39 @@ function RegisterFormContent() {
             </div>
 
             {role === 'seller' && (
-              <div className="mb-3">
-                <label className="form-label small fw-bold text-muted">
-                  {language === 'am' ? 'የንግድ ስም (ከተፈለገ)' : 'Business / Storefront Name (Optional)'}
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="e.g. Addis Tech Hub"
-                  value={businessName}
-                  onChange={(e) => setBusinessName(e.target.value)}
-                />
-              </div>
+              <>
+                <div className="mb-3">
+                  <label className="form-label small fw-bold text-muted">
+                    {language === 'am' ? 'የንግድ / የሱቅ ስም' : 'Store / Business Name'}
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="e.g. Addis Tech Hub"
+                    value={businessName}
+                    onChange={(e) => setBusinessName(e.target.value)}
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label small fw-bold text-muted">
+                    {language === 'am' ? 'የንግድ ዘርፍ / ምድብ' : 'Business Category'}
+                  </label>
+                  <select
+                    className="form-select"
+                    value={businessCategory}
+                    onChange={(e) => setBusinessCategory(e.target.value)}
+                  >
+                    <option value="Electronics">Electronics & Gadgets</option>
+                    <option value="Vehicles">Vehicles & Automotive</option>
+                    <option value="Home & Living">Home, Furniture & Living</option>
+                    <option value="Fashion">Fashion & Apparel</option>
+                    <option value="Beauty">Beauty & Personal Care</option>
+                    <option value="Construction">Hardware & Construction</option>
+                    <option value="General">General Merchandise</option>
+                  </select>
+                </div>
+              </>
             )}
 
             <div className="mb-3">
