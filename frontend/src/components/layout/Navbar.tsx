@@ -57,6 +57,10 @@ function NavbarContent() {
   const isAdmin = user?.role === 'admin';
   const isBuyer = user?.role === 'buyer' || (!isSeller && !isAdmin && isAuthenticated);
 
+  if (pathname === '/') {
+    return null;
+  }
+
   return (
     <header className="glass-navbar sticky-top py-2.5">
       <div className="container">

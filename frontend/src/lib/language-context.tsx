@@ -2,40 +2,62 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-export type Language = 'en' | 'am';
+export type Language = 'en' | 'om' | 'am';
 
 interface Translations {
   [key: string]: {
     en: string;
     am: string;
+    om?: string;
   };
 }
 
 export const translations: Translations = {
   // Brand & Tagline
   tagline: {
-    en: 'Discover More. Shop Smarter. Go Further.',
-    am: 'የበለጠ ያግኙ። በብልሃት ይሸምቱ። ወደፊት ይራመዱ።',
+    en: 'Everything you need, just a click away.',
+    am: 'የሚፈልጉትን ሁሉ፣ በአንድ ጠቅታ ብቻ።',
+    om: 'Waan barbaaddan hunda, cuqqaasuu tokkoon qofa.',
   },
   subtagline: {
-    en: 'Welcome to youGO-mart, your marketplace to discover products, connect with trusted sellers, and enjoy a simpler way to shop and grow your business.',
-    am: 'እንኳን ወደ ዩጎ-ማርት በደህና መጡ! ምርቶችን የሚያገኙበት፣ ከታመኑ ሻጮች ጋር የሚገናኙበት እና ንግድዎን የሚያሳድጉበት ዘመናዊ የገበያ መድረክ።',
+    en: 'Discover more. Shop smarter. Get it moving.',
+    am: 'የበለጠ ያግኙ። በብልሃት ይሸምቱ። አሁኑኑ ይጀምሩ።',
+    om: 'Dabalata argadhaa. Ogeessaan bitaa. Ammuma jalqabaa.',
   },
   hero_headline: {
-    en: 'Discover More. Shop Smarter. Go Further.',
-    am: 'የበለጠ ያግኙ። በብልሃት ይሸምቱ። ወደፊት ይራመዱ።',
+    en: 'Everything you need, just a click away.',
+    am: 'የሚፈልጉትን ሁሉ፣ በአንድ ጠቅታ ብቻ።',
+    om: 'Waan barbaaddan hunda, cuqqaasuu tokkoon qofa.',
   },
   hero_supporting: {
-    en: 'Welcome to youGO-mart, your marketplace to discover products, connect with trusted sellers, and enjoy a simpler way to shop and grow your business.',
-    am: 'እንኳን ወደ ዩጎ-ማርት በደህና መጡ! ምርቶችን የሚያገኙበት፣ ከታመኑ ሻጮች ጋር የሚገናኙበት እና ንግድዎን የሚያሳድጉበት ዘመናዊ የገበያ መድረክ።',
+    en: 'Discover more. Shop smarter. Get it moving.',
+    am: 'የበለጠ ያግኙ። በብልሃት ይሸምቱ። አሁኑኑ ይጀምሩ።',
+    om: 'Dabalata argadhaa. Ogeessaan bitaa. Ammuma jalqabaa.',
+  },
+  register_button: {
+    en: 'Register',
+    am: 'ተመዝገብ',
+    om: "Galmaa'aa",
+  },
+  about_us_button: {
+    en: 'About Us',
+    am: 'ስለ እኛ',
+    om: "Waa'ee Keenya",
+  },
+  scroll_down: {
+    en: 'Scroll Down',
+    am: 'ወደ ታች ይሸብልሉ',
+    om: 'Gadi Siqsaa',
   },
   start_shopping: {
     en: 'Start Shopping',
     am: 'መሸመት ይጀምሩ',
+    om: 'Bittaa Jalqabaa',
   },
   become_a_seller: {
     en: 'Become a Seller',
     am: 'ሻጭ ይሁኑ',
+    om: 'Gurguraa Ta\'aa',
   },
 
   // Navbar Links
@@ -202,7 +224,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   useEffect(() => {
     const saved = localStorage.getItem('yougo_language') as Language | null;
-    if (saved && (saved === 'en' || saved === 'am')) {
+    if (saved && (saved === 'en' || saved === 'am' || saved === 'om')) {
       setLanguageState(saved);
     }
   }, []);

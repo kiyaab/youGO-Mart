@@ -5,24 +5,20 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useLanguage } from '@/lib/language-context';
+import { LanguageSwitcher } from '@/components/landing/LanguageSwitcher';
 import {
   User,
   Info,
   ArrowRight,
-  Globe,
-  ChevronDown,
   Search,
   MapPin,
-  Sparkles,
-  ShoppingBag,
 } from 'lucide-react';
 
 export const Hero: React.FC = () => {
   const router = useRouter();
-  const { language, setLanguage, t } = useLanguage();
+  const { language, t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [cityFilter, setCityFilter] = useState('Addis Ababa');
-  const [langMenuOpen, setLangMenuOpen] = useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,117 +28,218 @@ export const Hero: React.FC = () => {
     router.push(`/search?${params.toString()}`);
   };
 
-  const toggleLanguage = () => {
-    setLanguage(language === 'en' ? 'am' : 'en');
-  };
+  // Localized hero strings
+  const headline = t('hero_headline');
+  const supporting = t('hero_supporting');
+  const registerText = t('register_button');
+  const aboutText = t('about_us_button');
+  const scrollText = t('scroll_down');
 
   return (
-    <div>
-      {/* 1. MASTER 3D PORTFOLIO HERO (EXACT USER DESIGN) */}
-      <section className="hero-3d-wrapper">
-        {/* DESKTOP / WIDESCREEN 16:9 PIXEL-PERFECT RENDER */}
-        <div className="d-none d-md-block hero-3d-desktop position-relative">
-          <Image
-            src="/images/hero-portfolio.png"
-            alt="youGO-mart — Discover More. Shop Smarter. Go Further."
-            width={1024}
-            height={575}
-            priority
-            className="hero-3d-bg-img"
-            style={{ width: '100%', height: 'auto' }}
-          />
-
-          {/* Interactive Hotspot: Top Left Logo */}
-          <Link
-            href="/"
-            className="hero-hotspot hero-hotspot-logo"
-            title="youGO-mart Home"
-            aria-label="youGO-mart Home"
-          />
-
-          {/* Interactive Hotspot: Top Right Language Dropdown Pill */}
-          <div className="position-absolute" style={{ right: '3.5%', top: '3.8%' }}>
-            <button
-              type="button"
-              onClick={toggleLanguage}
-              className="hero-hotspot hero-hotspot-lang d-flex align-items-center justify-content-center gap-1.5 px-3 py-1.5 border-0"
+    <div className="position-relative overflow-hidden" style={{ minHeight: '100svh', backgroundColor: '#F97316' }}>
+      {/* 1. MINIMAL & TRANSPARENT TOP NAVIGATION */}
+      <header
+        className="position-absolute top-0 start-0 w-100 px-3 px-md-5 py-3 d-flex align-items-center justify-content-between"
+        style={{ zIndex: 30 }}
+      >
+        {/* Brand Logo: Top Left */}
+        <Link
+          href="/"
+          className="d-flex align-items-center gap-2 text-white text-decoration-none"
+          title="youGO-mart"
+        >
+          <div className="d-flex align-items-center gap-1.5">
+            <span
+              className="fw-black text-white"
               style={{
-                position: 'relative',
-                color: '#FFFFFF',
-                fontSize: '0.86rem',
-                fontWeight: 700,
-                letterSpacing: '0.02em',
-                textShadow: '0 1px 3px rgba(0,0,0,0.3)',
+                fontSize: '1.75rem',
+                letterSpacing: '-0.04em',
+                fontWeight: 900,
+                textShadow: '0 2px 8px rgba(0,0,0,0.2)',
               }}
-              title="Toggle English / አማርኛ"
-              aria-label="Toggle Language"
             >
-              <Globe size={16} />
-              <span>{language === 'en' ? 'EN' : 'አማ'}</span>
-              <ChevronDown size={14} />
-            </button>
+              YG
+            </span>
+            <span
+              className="fw-bold text-white"
+              style={{
+                fontSize: '1.25rem',
+                letterSpacing: '-0.02em',
+                fontWeight: 700,
+                textShadow: '0 2px 8px rgba(0,0,0,0.2)',
+              }}
+            >
+              youGO-mart
+            </span>
           </div>
+        </Link>
 
-          {/* Interactive Hotspot: Primary White Pill "Register →" Button */}
-          <Link
-            href="/auth/register"
-            className="hero-hotspot hero-hotspot-register"
-            title={language === 'am' ? 'ተመዝገብ (Register)' : 'Register on youGO-mart'}
-            aria-label="Register"
-          />
-
-          {/* Interactive Hotspot: Translucent Frosted "About Us →" Button */}
-          <a
-            href="#about-us"
-            className="hero-hotspot hero-hotspot-about"
-            title={language === 'am' ? 'ስለ እኛ (About Us)' : 'About youGO-mart Portfolio'}
-            aria-label="About Us"
-          />
-
-          {/* Interactive Hotspot: Bottom Left "Scroll Down ↓" */}
-          <a
-            href="#explore-marketplace"
-            className="hero-hotspot hero-hotspot-scroll"
-            title="Scroll Down"
-            aria-label="Scroll Down"
-          />
+        {/* Compact Language Selector: Top Right */}
+        <div>
+          <LanguageSwitcher />
         </div>
+      </header>
 
-        {/* MOBILE / TABLET ADAPTIVE RENDER (PIXEL-PERFECT FIDELITY) */}
-        <div className="d-block d-md-none px-4 py-5 text-center text-white position-relative">
-          {/* Top Bar for Mobile */}
-          <div className="d-flex align-items-center justify-content-between mb-4">
-            <Link href="/" className="d-flex align-items-center gap-2 text-white text-decoration-none">
-              <span className="fw-black fs-4" style={{ letterSpacing: '-0.03em' }}>
-                <span className="text-white">YG</span> youGO-mart
-              </span>
+      {/* 2. FULL-SCREEN HERO SECTION (MINIMUM 100svh) */}
+      <section
+        className="d-flex flex-column justify-content-between position-relative"
+        style={{
+          minHeight: '100svh',
+          background: 'radial-gradient(circle at 65% 45%, #FB923C 0%, #F97316 48%, #EA580C 100%)',
+          paddingTop: '4.5rem',
+        }}
+      >
+        {/* DESKTOP / TABLET WIDESCREEN COMPOSITION */}
+        <div className="container-fluid d-none d-lg-block position-relative my-auto px-4 px-xl-5" style={{ maxWidth: '1440px' }}>
+          <div
+            className="position-relative mx-auto"
+            style={{
+              width: '100%',
+              maxWidth: '1240px',
+              aspectRatio: '1024 / 575',
+              borderRadius: '24px',
+              overflow: 'hidden',
+              boxShadow: '0 20px 50px rgba(0, 0, 0, 0.15)',
+            }}
+          >
+            {/* High-res reference visual artwork */}
+            <Image
+              src="/images/yougo-mart-hero.png"
+              alt="youGO-mart — Discover More. Shop Smarter. Go Further."
+              fill
+              priority
+              quality={95}
+              style={{
+                objectFit: 'cover',
+                userSelect: 'none',
+              }}
+            />
+
+            {/* Live Interactive Button: REGISTER */}
+            <Link
+              href="/register"
+              className="position-absolute d-flex align-items-center justify-content-center gap-2 text-decoration-none fw-bold"
+              style={{
+                left: '7.4%',
+                top: '68.2%',
+                width: '16.6%',
+                height: '9.4%',
+                borderRadius: '9999px',
+                background: '#FFFFFF',
+                color: '#F97316',
+                boxShadow: '0 12px 35px rgba(234, 88, 12, 0.7), 0 2px 10px rgba(0,0,0,0.1)',
+                fontSize: 'clamp(0.85rem, 1.1vw, 1.05rem)',
+                transition: 'all 0.22s cubic-bezier(0.16, 1, 0.3, 1)',
+                zIndex: 10,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
+                e.currentTarget.style.boxShadow = '0 16px 45px rgba(234, 88, 12, 0.9)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow = '0 12px 35px rgba(234, 88, 12, 0.7), 0 2px 10px rgba(0,0,0,0.1)';
+              }}
+              title="Register on youGO-mart"
+            >
+              <User size={18} />
+              <span>{registerText}</span>
+              <ArrowRight size={18} />
             </Link>
 
-            <button
-              type="button"
-              onClick={toggleLanguage}
-              className="btn btn-sm rounded-pill d-flex align-items-center gap-1 px-3 py-1 fw-bold text-white"
+            {/* Live Interactive Button: ABOUT US */}
+            <a
+              href="#about-us"
+              className="position-absolute d-flex align-items-center justify-content-center gap-2 text-decoration-none fw-bold text-white"
               style={{
-                background: 'rgba(255, 255, 255, 0.18)',
-                border: '1.5px solid rgba(255, 255, 255, 0.6)',
+                left: '24.8%',
+                top: '68.2%',
+                width: '15.6%',
+                height: '9.4%',
+                borderRadius: '9999px',
+                background: 'rgba(255, 255, 255, 0.15)',
+                border: '1.5px solid rgba(255, 255, 255, 0.8)',
                 backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)',
+                fontSize: 'clamp(0.85rem, 1.1vw, 1.05rem)',
+                transition: 'all 0.22s cubic-bezier(0.16, 1, 0.3, 1)',
+                zIndex: 10,
               }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
+                e.currentTarget.style.boxShadow = '0 8px 30px rgba(255, 255, 255, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
+              title="About youGO-mart"
             >
-              <Globe size={14} />
-              <span>{language === 'en' ? 'EN' : 'አማ'}</span>
-              <ChevronDown size={12} />
-            </button>
-          </div>
+              <Info size={18} />
+              <span>{aboutText}</span>
+              <ArrowRight size={18} />
+            </a>
 
-          {/* 3D Visual Graphic */}
-          <div className="my-3 position-relative" style={{ maxWidth: '380px', margin: '0 auto' }}>
+            {/* Live Interactive: SCROLL DOWN INDICATOR */}
+            <a
+              href="#about-us"
+              className="position-absolute d-flex align-items-center gap-2 text-decoration-none text-white fw-bold"
+              style={{
+                left: '5.5%',
+                top: '89.0%',
+                opacity: 0.92,
+                fontSize: 'clamp(0.78rem, 0.95vw, 0.92rem)',
+                transition: 'transform 0.2s ease, opacity 0.2s ease',
+                zIndex: 10,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(2px)';
+                e.currentTarget.style.opacity = '1';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.opacity = '0.92';
+              }}
+              title="Scroll Down"
+            >
+              <div
+                style={{
+                  width: '20px',
+                  height: '32px',
+                  borderRadius: '10px',
+                  border: '2px solid rgba(255, 255, 255, 0.85)',
+                  position: 'relative',
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <div
+                  style={{
+                    width: '3px',
+                    height: '6px',
+                    backgroundColor: '#FFFFFF',
+                    borderRadius: '2px',
+                    marginTop: '5px',
+                  }}
+                />
+              </div>
+              <span>{scrollText} ↓</span>
+            </a>
+          </div>
+        </div>
+
+        {/* MOBILE & TABLET PORTRAIT RESPONSIVE COMPOSITION */}
+        <div className="container d-block d-lg-none py-4 px-4 my-auto text-center text-white">
+          {/* Animated 3D Mascot Graphic */}
+          <div className="position-relative mx-auto mb-4" style={{ maxWidth: '420px', width: '100%', aspectRatio: '16 / 9' }}>
             <Image
-              src="/images/hero-portfolio.png"
-              alt="youGO-mart 3D Runner with Cart"
-              width={512}
-              height={288}
+              src="/images/yougo-mart-hero.png"
+              alt="youGO-mart Mascot"
+              fill
               priority
-              className="img-fluid rounded-4 shadow-lg"
+              className="rounded-4 shadow-lg"
               style={{
                 objectFit: 'cover',
                 border: '2px solid rgba(255, 255, 255, 0.35)',
@@ -150,61 +247,81 @@ export const Hero: React.FC = () => {
             />
           </div>
 
-          {/* Main Title & Tagline */}
-          <h1 className="fw-black display-6 mt-3 mb-2 text-white" style={{ letterSpacing: '-0.02em', textShadow: '0 2px 10px rgba(0,0,0,0.25)' }}>
-            Everything you need,<br />
-            <span style={{ color: '#FFF7ED' }}>just a click away.</span>
+          {/* Main Headline & Supporting Text */}
+          <h1
+            className="fw-black display-6 text-white mb-2"
+            style={{
+              letterSpacing: '-0.03em',
+              fontWeight: 900,
+              textShadow: '0 2px 12px rgba(0,0,0,0.25)',
+              lineHeight: 1.18,
+            }}
+          >
+            {headline}
           </h1>
-          <p className="small text-white-50 mb-4" style={{ fontSize: '0.92rem' }}>
-            {language === 'am'
-              ? 'የሚፈልጉትን ሁሉ፣ በአንድ ጠቅታ ብቻ። ያለ ኮሚሽን በቀጥታ ይገበያዩ!'
-              : 'Direct connection marketplace • 100% Free • No sales commission'}
+          <p
+            className="lead text-white-50 mb-4 mx-auto"
+            style={{
+              fontSize: '1.02rem',
+              maxWidth: '440px',
+              lineHeight: 1.5,
+              textShadow: '0 1px 4px rgba(0,0,0,0.15)',
+            }}
+          >
+            {supporting}
           </p>
 
-          {/* Mobile Action Buttons */}
-          <div className="d-flex flex-column gap-2.5 mb-4" style={{ maxWidth: '340px', margin: '0 auto' }}>
+          {/* The Two Primary Action Buttons */}
+          <div className="d-flex flex-column gap-3 mx-auto mb-4" style={{ maxWidth: '360px' }}>
+            {/* Button A: Register */}
             <Link
-              href="/auth/register"
+              href="/register"
               className="btn py-3 px-4 rounded-pill fw-bold d-flex align-items-center justify-content-center gap-2 shadow-lg"
               style={{
                 backgroundColor: '#FFFFFF',
                 color: '#F97316',
-                boxShadow: '0 12px 30px rgba(234, 88, 12, 0.6)',
-                fontSize: '1rem',
+                boxShadow: '0 12px 30px rgba(234, 88, 12, 0.65)',
+                fontSize: '1.05rem',
+                border: 'none',
               }}
             >
-              <User size={18} />
-              <span>{language === 'am' ? 'ተመዝገብ' : 'Register'}</span>
-              <ArrowRight size={18} />
+              <User size={19} />
+              <span>{registerText}</span>
+              <ArrowRight size={19} />
             </Link>
 
+            {/* Button B: About Us */}
             <a
               href="#about-us"
-              className="btn py-2.5 px-4 rounded-pill fw-bold d-flex align-items-center justify-content-center gap-2"
+              className="btn py-3 px-4 rounded-pill fw-bold d-flex align-items-center justify-content-center gap-2 text-white"
               style={{
                 background: 'rgba(255, 255, 255, 0.15)',
-                border: '1.5px solid rgba(255, 255, 255, 0.7)',
-                color: '#FFFFFF',
+                border: '1.5px solid rgba(255, 255, 255, 0.8)',
                 backdropFilter: 'blur(10px)',
-                fontSize: '0.95rem',
+                WebkitBackdropFilter: 'blur(10px)',
+                fontSize: '1.05rem',
               }}
             >
-              <Info size={17} />
-              <span>{language === 'am' ? 'ስለ እኛ' : 'About Us'}</span>
-              <ArrowRight size={17} />
+              <Info size={19} />
+              <span>{aboutText}</span>
+              <ArrowRight size={19} />
             </a>
           </div>
 
+          {/* Mobile Scroll Indicator */}
           <a
-            href="#explore-marketplace"
-            className="d-inline-flex align-items-center gap-1.5 text-white-50 small text-decoration-none mt-2"
+            href="#about-us"
+            className="d-inline-flex align-items-center gap-1.5 text-white-50 small text-decoration-none"
           >
-            <span>↓ {language === 'am' ? 'ወደ ታች ይሸብልሉ' : 'Scroll Down'}</span>
+            <span>↓ {scrollText}</span>
           </a>
         </div>
+
+        {/* BOTTOM SUBTLE TRANSITION STRIP */}
+        <div style={{ height: '1.5rem', width: '100%' }} />
       </section>
 
-      {/* 2. FLOATING MARKETPLACE SEARCH & DISCOVERY BAR */}
+      {/* 3. QUICK SEARCH BAR DIRECTLY BENEATH HERO */}
       <section
         id="explore-marketplace"
         className="py-4 position-relative"
@@ -213,7 +330,7 @@ export const Hero: React.FC = () => {
           borderBottom: '1px solid var(--border-color)',
         }}
       >
-        <div className="container" style={{ maxWidth: '840px' }}>
+        <div className="container" style={{ maxWidth: '860px' }}>
           <form
             onSubmit={handleSearch}
             className="glass-card p-2.5 p-sm-3 shadow-md rounded-4"
@@ -230,6 +347,8 @@ export const Hero: React.FC = () => {
                     placeholder={
                       language === 'am'
                         ? 'ስልኮች፣ መኪናዎች፣ ልብሶች ወይም የኤሌክትሮኒክስ ዕቃዎችን ይፈልጉ...'
+                        : language === 'om'
+                        ? 'Bilbila, konkolaataa, uffata ykn meeshaalee elektirooniksii barbaadaa...'
                         : 'Search phones, electronics, vehicles, fashion...'
                     }
                     value={searchTerm}
@@ -265,7 +384,7 @@ export const Hero: React.FC = () => {
 
               <div className="col-12 col-sm-2">
                 <button type="submit" className="btn-orange w-100 py-2.5 fw-bold">
-                  {language === 'am' ? 'ፈልግ' : 'Search'}
+                  {language === 'am' ? 'ፈልግ' : language === 'om' ? 'Barbaadi' : 'Search'}
                 </button>
               </div>
             </div>
