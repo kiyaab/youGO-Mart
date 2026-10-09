@@ -1,0 +1,54 @@
+# Python & Virtual Environments
+venv/
+backend/venv/
+ENV/
+env/
+.venv/
+__pycache__/
+*/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Django & Database
+*.sqlite3
+backend/db.sqlite3
+local_settings.py
+*.log
+
+# Node & Next.js
+node_modules/
+frontend/node_modules/
+.next/
+frontend/.next/
+out/
+frontend/out/
+build/
+frontend/build/
+.turbo/
+frontend/.turbo/
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+frontend/.env
+frontend/.env.local
+backend/.env
+
+# Editor & OS files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Temporary & Test Coverage
+.coverage
+htmlcov/
+*.coverage.*
+.pytest_cache/

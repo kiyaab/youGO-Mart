@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: yougo_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: yougo_mart
+      POSTGRES_USER: yougo_user
+      POSTGRES_PASSWORD: yougo_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: yougo_backend
+    restart: always
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py seed_yougo_data &&
+             gunicorn yougo_core.wsgi:application --bind 0.0.0.0:8000 --workers 3"
+    environment:
+      DEBUG: "False"
+      DJANGO_SECRET_KEY: "yougo-mart-prod-key"
+      ALLOWED_HOSTS: "*"
+      DATABASE_URL: "postgresql://yougo_user:yougo_password@db:5432/yougo_mart"
+    volumes:
+      - ./backend/media:/app/media
+      - ./backend/staticfiles:/app/staticfiles
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: yougo_frontend
+    restart: always
+    environment:
+      NEXT_PUBLIC_API_URL: "http://localhost:8000/api/v1"
+      NODE_ENV: "production"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
