@@ -2,16 +2,27 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useLanguage } from '@/lib/language-context';
-import { Search, MapPin, Sparkles, ArrowRight, Store, ShoppingBag, ShieldCheck } from 'lucide-react';
-import Image from 'next/image';
+import {
+  User,
+  Info,
+  ArrowRight,
+  Globe,
+  ChevronDown,
+  Search,
+  MapPin,
+  Sparkles,
+  ShoppingBag,
+} from 'lucide-react';
 
 export const Hero: React.FC = () => {
   const router = useRouter();
-  const { language, t } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [cityFilter, setCityFilter] = useState('Addis Ababa');
+  const [langMenuOpen, setLangMenuOpen] = useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,236 +32,246 @@ export const Hero: React.FC = () => {
     router.push(`/search?${params.toString()}`);
   };
 
-  return (
-    <section
-      className="py-5 position-relative overflow-hidden"
-      style={{
-        background: 'linear-gradient(180deg, #FFFFFF 0%, var(--bg-soft) 100%)',
-        borderBottom: '1px solid var(--border-color)',
-      }}
-    >
-      <div className="container py-lg-4">
-        <div className="row align-items-center g-5">
-          {/* Left Column: Headline and Value Proposition */}
-          <div className="col-lg-7">
-            {/* Launch / Commission Badge */}
-            <div className="d-inline-flex align-items-center gap-2 px-3 py-1 mb-3 rounded-pill glass-card">
-              <span className="badge rounded-pill bg-warning text-dark fw-bold">
-                {language === 'am' ? 'ኢትዮጵያ 🇪🇹' : 'Ethiopia 🇪🇹'}
-              </span>
-              <span className="small fw-semibold" style={{ color: 'var(--text-main)' }}>
-                {t('zero_commission_badge')}
-              </span>
-            </div>
+  const toggleLanguage = () => {
+    setLanguage(language === 'en' ? 'am' : 'en');
+  };
 
-            {/* Main Headline */}
-            <h1
-              className="fw-extrabold display-4 mb-3 tracking-tight"
+  return (
+    <div>
+      {/* 1. MASTER 3D PORTFOLIO HERO (EXACT USER DESIGN) */}
+      <section className="hero-3d-wrapper">
+        {/* DESKTOP / WIDESCREEN 16:9 PIXEL-PERFECT RENDER */}
+        <div className="d-none d-md-block hero-3d-desktop position-relative">
+          <Image
+            src="/images/hero-portfolio.png"
+            alt="youGO-mart — Discover More. Shop Smarter. Go Further."
+            width={1024}
+            height={575}
+            priority
+            className="hero-3d-bg-img"
+            style={{ width: '100%', height: 'auto' }}
+          />
+
+          {/* Interactive Hotspot: Top Left Logo */}
+          <Link
+            href="/"
+            className="hero-hotspot hero-hotspot-logo"
+            title="youGO-mart Home"
+            aria-label="youGO-mart Home"
+          />
+
+          {/* Interactive Hotspot: Top Right Language Dropdown Pill */}
+          <div className="position-absolute" style={{ right: '3.5%', top: '3.8%' }}>
+            <button
+              type="button"
+              onClick={toggleLanguage}
+              className="hero-hotspot hero-hotspot-lang d-flex align-items-center justify-content-center gap-1.5 px-3 py-1.5 border-0"
               style={{
-                letterSpacing: '-0.03em',
-                lineHeight: 1.15,
-                fontWeight: 800,
-                color: 'var(--text-main)',
+                position: 'relative',
+                color: '#FFFFFF',
+                fontSize: '0.86rem',
+                fontWeight: 700,
+                letterSpacing: '0.02em',
+                textShadow: '0 1px 3px rgba(0,0,0,0.3)',
+              }}
+              title="Toggle English / አማርኛ"
+              aria-label="Toggle Language"
+            >
+              <Globe size={16} />
+              <span>{language === 'en' ? 'EN' : 'አማ'}</span>
+              <ChevronDown size={14} />
+            </button>
+          </div>
+
+          {/* Interactive Hotspot: Primary White Pill "Register →" Button */}
+          <Link
+            href="/auth/register"
+            className="hero-hotspot hero-hotspot-register"
+            title={language === 'am' ? 'ተመዝገብ (Register)' : 'Register on youGO-mart'}
+            aria-label="Register"
+          />
+
+          {/* Interactive Hotspot: Translucent Frosted "About Us →" Button */}
+          <a
+            href="#about-us"
+            className="hero-hotspot hero-hotspot-about"
+            title={language === 'am' ? 'ስለ እኛ (About Us)' : 'About youGO-mart Portfolio'}
+            aria-label="About Us"
+          />
+
+          {/* Interactive Hotspot: Bottom Left "Scroll Down ↓" */}
+          <a
+            href="#explore-marketplace"
+            className="hero-hotspot hero-hotspot-scroll"
+            title="Scroll Down"
+            aria-label="Scroll Down"
+          />
+        </div>
+
+        {/* MOBILE / TABLET ADAPTIVE RENDER (PIXEL-PERFECT FIDELITY) */}
+        <div className="d-block d-md-none px-4 py-5 text-center text-white position-relative">
+          {/* Top Bar for Mobile */}
+          <div className="d-flex align-items-center justify-content-between mb-4">
+            <Link href="/" className="d-flex align-items-center gap-2 text-white text-decoration-none">
+              <span className="fw-black fs-4" style={{ letterSpacing: '-0.03em' }}>
+                <span className="text-white">YG</span> youGO-mart
+              </span>
+            </Link>
+
+            <button
+              type="button"
+              onClick={toggleLanguage}
+              className="btn btn-sm rounded-pill d-flex align-items-center gap-1 px-3 py-1 fw-bold text-white"
+              style={{
+                background: 'rgba(255, 255, 255, 0.18)',
+                border: '1.5px solid rgba(255, 255, 255, 0.6)',
+                backdropFilter: 'blur(8px)',
               }}
             >
-              {language === 'am' ? (
-                <>
-                  የበለጠ ያግኙ። በብልሃት ይሸምቱ። <span style={{ color: 'var(--primary-orange)' }}>ወደፊት ይራመዱ።</span>
-                </>
-              ) : (
-                <>
-                  Discover More. Shop Smarter. <span style={{ color: 'var(--primary-orange)' }}>Go Further.</span>
-                </>
-              )}
-            </h1>
-
-            {/* Supporting Copy */}
-            <p
-              className="lead text-muted mb-4"
-              style={{ fontSize: '1.15rem', lineHeight: 1.6, maxWidth: '580px' }}
-            >
-              {t('hero_supporting')}
-            </p>
-
-            {/* Central Glassy Search Box */}
-            <form
-              onSubmit={handleSearch}
-              className="p-2 p-sm-2.5 glass-card shadow-sm rounded-4 mb-4"
-              style={{ maxWidth: '620px' }}
-            >
-              <div className="row g-2 align-items-center">
-                <div className="col-12 col-sm-6 position-relative">
-                  <div className="input-group">
-                    <span className="input-group-text bg-transparent border-0 pe-1 text-muted">
-                      <Search size={18} />
-                    </span>
-                    <input
-                      type="text"
-                      className="form-control border-0 ps-1 shadow-none bg-transparent"
-                      placeholder={t('search_placeholder')}
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      style={{ fontSize: '0.92rem' }}
-                    />
-                  </div>
-                </div>
-
-                <div className="col-12 col-sm-4 border-start-sm">
-                  <div className="input-group">
-                    <span className="input-group-text bg-transparent border-0 pe-1" style={{ color: 'var(--primary-orange)' }}>
-                      <MapPin size={18} />
-                    </span>
-                    <select
-                      className="form-select border-0 ps-1 shadow-none bg-transparent"
-                      value={cityFilter}
-                      onChange={(e) => setCityFilter(e.target.value)}
-                      style={{ fontSize: '0.88rem' }}
-                    >
-                      <option value="Addis Ababa">Addis Ababa</option>
-                      <option value="Hawassa">Hawassa</option>
-                      <option value="Adama">Adama</option>
-                      <option value="Bahir Dar">Bahir Dar</option>
-                      <option value="Dire Dawa">Dire Dawa</option>
-                      <option value="All Ethiopia">All Ethiopia</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="col-12 col-sm-2">
-                  <button type="submit" className="btn-orange w-100 py-2">
-                    {language === 'am' ? 'ፈልግ' : 'Search'}
-                  </button>
-                </div>
-              </div>
-            </form>
-
-            {/* Primary Action Buttons */}
-            <div className="d-flex flex-wrap align-items-center gap-3">
-              <Link href="/search" className="btn-orange py-2.5 px-4 shadow-sm">
-                <ShoppingBag size={18} />
-                <span>{t('start_shopping')}</span>
-                <ArrowRight size={17} />
-              </Link>
-              <Link href="/auth/register?role=seller" className="btn-neutral py-2.5 px-4 fw-semibold">
-                <Store size={18} style={{ color: 'var(--primary-orange)' }} />
-                <span>{t('become_a_seller')}</span>
-              </Link>
-            </div>
-
-            {/* Marketplace Benefits Row */}
-            <div className="d-flex flex-wrap align-items-center gap-4 mt-4 pt-3 border-top text-muted small">
-              <div className="d-flex align-items-center gap-2">
-                <ShieldCheck size={18} className="text-success" />
-                <span>{language === 'am' ? 'ቀጥታ እና ደህንነቱ የተጠበቀ' : 'Direct & Verified'}</span>
-              </div>
-              <div className="d-flex align-items-center gap-2">
-                <Sparkles size={18} style={{ color: 'var(--primary-orange)' }} />
-                <span>{language === 'am' ? '0% የሽያጭ ኮሚሽን' : '0% Commission'}</span>
-              </div>
-              <div className="d-flex align-items-center gap-2">
-                <span className="fw-bold" style={{ color: 'var(--text-main)' }}>100% Free</span>
-                <span>{language === 'am' ? 'ነፃ ምዝገባ' : 'Standard Postings'}</span>
-              </div>
-            </div>
+              <Globe size={14} />
+              <span>{language === 'en' ? 'EN' : 'አማ'}</span>
+              <ChevronDown size={12} />
+            </button>
           </div>
 
-          {/* Right Column: Marketplace Visual Composition */}
-          <div className="col-lg-5 d-none d-lg-block">
-            <div className="position-relative">
-              {/* Product Card Showcase 1 */}
-              <div
-                className="glass-card shadow-lg p-3 position-relative z-2 mb-3"
-                style={{
-                  maxWidth: '340px',
-                  borderRadius: '16px',
-                  transform: 'rotate(-2deg)',
-                }}
-              >
-                <div className="d-flex align-items-center gap-3">
-                  <div
-                    style={{
-                      width: '72px',
-                      height: '72px',
-                      borderRadius: '12px',
-                      overflow: 'hidden',
-                      position: 'relative',
-                      backgroundColor: '#F5F5F4',
-                    }}
-                  >
-                    <Image
-                      src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=200&q=80"
-                      alt="Product Spotlight"
-                      fill
-                      style={{ objectFit: 'cover' }}
-                    />
-                  </div>
-                  <div>
-                    <span className="badge-featured mb-1">Spotlight</span>
-                    <h6 className="fw-bold mb-1 small">Smart Tech & Mobile</h6>
-                    <div className="yg-price" style={{ fontSize: '1.1rem' }}>
-                      148,000 <small className="text-muted" style={{ fontSize: '0.75rem' }}>ETB</small>
-                    </div>
-                    <div className="small text-muted" style={{ fontSize: '0.75rem' }}>
-                      Bole, Addis Ababa
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Product Card Showcase 2 */}
-              <div
-                className="glass-card shadow-lg p-3 position-relative z-1 ms-auto"
-                style={{
-                  maxWidth: '350px',
-                  borderRadius: '16px',
-                  transform: 'rotate(2deg) translateY(-10px)',
-                }}
-              >
-                <div className="d-flex align-items-center gap-3">
-                  <div
-                    style={{
-                      width: '72px',
-                      height: '72px',
-                      borderRadius: '12px',
-                      overflow: 'hidden',
-                      position: 'relative',
-                      backgroundColor: '#F5F5F4',
-                    }}
-                  >
-                    <Image
-                      src="https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=200&q=80"
-                      alt="Vehicle Showcase"
-                      fill
-                      style={{ objectFit: 'cover' }}
-                    />
-                  </div>
-                  <div>
-                    <span className="badge-negotiable mb-1">Direct Deal</span>
-                    <h6 className="fw-bold mb-1 small">Automotive & Transport</h6>
-                    <div className="yg-price" style={{ fontSize: '1.1rem' }}>
-                      4,850,000 <small className="text-muted" style={{ fontSize: '0.75rem' }}>ETB</small>
-                    </div>
-                    <div className="small text-muted" style={{ fontSize: '0.75rem' }}>
-                      Addis Ababa, Ethiopia
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Decorative Subtle Background Element */}
-              <div
-                className="position-absolute top-50 start-50 translate-middle rounded-circle"
-                style={{
-                  width: '320px',
-                  height: '320px',
-                  background: 'radial-gradient(circle, rgba(249, 115, 22, 0.12) 0%, rgba(249, 115, 22, 0) 70%)',
-                  zIndex: 0,
-                }}
-              />
-            </div>
+          {/* 3D Visual Graphic */}
+          <div className="my-3 position-relative" style={{ maxWidth: '380px', margin: '0 auto' }}>
+            <Image
+              src="/images/hero-portfolio.png"
+              alt="youGO-mart 3D Runner with Cart"
+              width={512}
+              height={288}
+              priority
+              className="img-fluid rounded-4 shadow-lg"
+              style={{
+                objectFit: 'cover',
+                border: '2px solid rgba(255, 255, 255, 0.35)',
+              }}
+            />
           </div>
+
+          {/* Main Title & Tagline */}
+          <h1 className="fw-black display-6 mt-3 mb-2 text-white" style={{ letterSpacing: '-0.02em', textShadow: '0 2px 10px rgba(0,0,0,0.25)' }}>
+            Everything you need,<br />
+            <span style={{ color: '#FFF7ED' }}>just a click away.</span>
+          </h1>
+          <p className="small text-white-50 mb-4" style={{ fontSize: '0.92rem' }}>
+            {language === 'am'
+              ? 'የሚፈልጉትን ሁሉ፣ በአንድ ጠቅታ ብቻ። ያለ ኮሚሽን በቀጥታ ይገበያዩ!'
+              : 'Direct connection marketplace • 100% Free • No sales commission'}
+          </p>
+
+          {/* Mobile Action Buttons */}
+          <div className="d-flex flex-column gap-2.5 mb-4" style={{ maxWidth: '340px', margin: '0 auto' }}>
+            <Link
+              href="/auth/register"
+              className="btn py-3 px-4 rounded-pill fw-bold d-flex align-items-center justify-content-center gap-2 shadow-lg"
+              style={{
+                backgroundColor: '#FFFFFF',
+                color: '#F97316',
+                boxShadow: '0 12px 30px rgba(234, 88, 12, 0.6)',
+                fontSize: '1rem',
+              }}
+            >
+              <User size={18} />
+              <span>{language === 'am' ? 'ተመዝገብ' : 'Register'}</span>
+              <ArrowRight size={18} />
+            </Link>
+
+            <a
+              href="#about-us"
+              className="btn py-2.5 px-4 rounded-pill fw-bold d-flex align-items-center justify-content-center gap-2"
+              style={{
+                background: 'rgba(255, 255, 255, 0.15)',
+                border: '1.5px solid rgba(255, 255, 255, 0.7)',
+                color: '#FFFFFF',
+                backdropFilter: 'blur(10px)',
+                fontSize: '0.95rem',
+              }}
+            >
+              <Info size={17} />
+              <span>{language === 'am' ? 'ስለ እኛ' : 'About Us'}</span>
+              <ArrowRight size={17} />
+            </a>
+          </div>
+
+          <a
+            href="#explore-marketplace"
+            className="d-inline-flex align-items-center gap-1.5 text-white-50 small text-decoration-none mt-2"
+          >
+            <span>↓ {language === 'am' ? 'ወደ ታች ይሸብልሉ' : 'Scroll Down'}</span>
+          </a>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* 2. FLOATING MARKETPLACE SEARCH & DISCOVERY BAR */}
+      <section
+        id="explore-marketplace"
+        className="py-4 position-relative"
+        style={{
+          backgroundColor: 'var(--bg-soft)',
+          borderBottom: '1px solid var(--border-color)',
+        }}
+      >
+        <div className="container" style={{ maxWidth: '840px' }}>
+          <form
+            onSubmit={handleSearch}
+            className="glass-card p-2.5 p-sm-3 shadow-md rounded-4"
+          >
+            <div className="row g-2 align-items-center">
+              <div className="col-12 col-sm-6 position-relative">
+                <div className="input-group">
+                  <span className="input-group-text bg-transparent border-0 pe-1 text-muted">
+                    <Search size={19} />
+                  </span>
+                  <input
+                    type="text"
+                    className="form-control border-0 ps-1 shadow-none bg-transparent"
+                    placeholder={
+                      language === 'am'
+                        ? 'ስልኮች፣ መኪናዎች፣ ልብሶች ወይም የኤሌክትሮኒክስ ዕቃዎችን ይፈልጉ...'
+                        : 'Search phones, electronics, vehicles, fashion...'
+                    }
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    style={{ fontSize: '0.94rem' }}
+                  />
+                </div>
+              </div>
+
+              <div className="col-12 col-sm-4 border-start-sm">
+                <div className="input-group">
+                  <span
+                    className="input-group-text bg-transparent border-0 pe-1"
+                    style={{ color: 'var(--primary-orange)' }}
+                  >
+                    <MapPin size={18} />
+                  </span>
+                  <select
+                    className="form-select border-0 ps-1 shadow-none bg-transparent fw-semibold"
+                    value={cityFilter}
+                    onChange={(e) => setCityFilter(e.target.value)}
+                    style={{ fontSize: '0.88rem' }}
+                  >
+                    <option value="Addis Ababa">Addis Ababa (አዲስ አበባ)</option>
+                    <option value="Hawassa">Hawassa (ሐዋሳ)</option>
+                    <option value="Adama">Adama (አዳማ)</option>
+                    <option value="Bahir Dar">Bahir Dar (ባሕር ዳር)</option>
+                    <option value="Dire Dawa">Dire Dawa (ድሬዳዋ)</option>
+                    <option value="All Ethiopia">All Ethiopia (መላው ኢትዮጵያ)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="col-12 col-sm-2">
+                <button type="submit" className="btn-orange w-100 py-2.5 fw-bold">
+                  {language === 'am' ? 'ፈልግ' : 'Search'}
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
   );
 };

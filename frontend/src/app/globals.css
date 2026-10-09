@@ -278,3 +278,115 @@ a {
   padding: 0.45rem 1rem;
   font-weight: 500;
 }
+
+/* 3D Portfolio Hero Styles */
+.hero-3d-wrapper {
+  position: relative;
+  width: 100%;
+  background: radial-gradient(circle at 65% 45%, #FB923C 0%, #F97316 50%, #EA580C 100%);
+  overflow: hidden;
+}
+
+.hero-3d-desktop {
+  position: relative;
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  aspect-ratio: 1024 / 575;
+}
+
+.hero-3d-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.hero-hotspot {
+  position: absolute;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 9999px;
+}
+
+.hero-hotspot-register {
+  left: 7.4%;
+  top: 68.2%;
+  width: 16.6%;
+  height: 9.4%;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.001);
+}
+
+.hero-hotspot-register:hover {
+  box-shadow: 0 14px 40px rgba(255, 107, 0, 0.8), 0 0 25px rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px) scale(1.025);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.hero-hotspot-about {
+  left: 24.8%;
+  top: 68.2%;
+  width: 15.6%;
+  height: 9.4%;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.001);
+}
+
+.hero-hotspot-about:hover {
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px) scale(1.025);
+}
+
+.hero-hotspot-lang {
+  right: 3.5%;
+  top: 3.8%;
+  width: 9.2%;
+  height: 8.5%;
+  border-radius: 9999px;
+  background: transparent;
+}
+
+.hero-hotspot-lang:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.hero-hotspot-scroll {
+  left: 5.4%;
+  top: 89.0%;
+  width: 12.0%;
+  height: 6.8%;
+  border-radius: 9999px;
+  background: transparent;
+}
+
+.hero-hotspot-scroll:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(2px);
+}
+
+.hero-hotspot-logo {
+  left: 5.2%;
+  top: 3.6%;
+  width: 20.0%;
+  height: 9.0%;
+  border-radius: 12px;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 10px 30px rgba(234, 88, 12, 0.5);
+  }
+  50% {
+    box-shadow: 0 14px 44px rgba(234, 88, 12, 0.85);
+  }
+}
+
