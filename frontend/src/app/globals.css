@@ -306,10 +306,40 @@ a {
   max-width: 680px;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 25px 45px rgba(194, 65, 12, 0.45));
-  animation: mascotBob 4.5s ease-in-out infinite;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 14%, black 100%);
-  mask-image: linear-gradient(to right, transparent 0%, black 14%, black 100%);
+  filter: drop-shadow(0 28px 56px rgba(194, 65, 12, 0.55)) drop-shadow(0 8px 18px rgba(0, 0, 0, 0.2));
+  animation: mascotBob 4.6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 2;
+}
+
+.hero-mascot-img:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+
+.mascot-ground-glow {
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  width: 65%;
+  height: 38px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 237, 213, 0.55) 0%, rgba(249, 115, 22, 0.3) 50%, transparent 80%);
+  filter: blur(10px);
+  pointer-events: none;
+  z-index: 1;
+  animation: groundGlowPulse 4.6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+@keyframes groundGlowPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(0.92);
+    opacity: 0.5;
+  }
 }
 
 @keyframes mascotBob {
@@ -317,7 +347,7 @@ a {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-12px);
   }
 }
 

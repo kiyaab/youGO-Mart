@@ -90,6 +90,34 @@ export const Hero: React.FC = () => {
           <div className="row align-items-center g-4 g-lg-5">
             {/* Left Column: 3D Logo, Headline, Buttons, Scroll Indicator */}
             <div className="col-12 col-lg-5 col-xl-5 ps-lg-4 text-start text-white">
+              {/* Trust Badge Pill */}
+              <div
+                className="d-inline-flex align-items-center gap-2 px-3 py-1.5 rounded-pill mb-3"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.16)',
+                  border: '1px solid rgba(255, 255, 255, 0.4)',
+                  backdropFilter: 'blur(10px)',
+                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.06)',
+                }}
+              >
+                <span
+                  className="rounded-circle bg-white"
+                  style={{
+                    width: '7px',
+                    height: '7px',
+                    display: 'inline-block',
+                    boxShadow: '0 0 8px #FFFFFF',
+                  }}
+                />
+                <span className="text-white fw-bold" style={{ fontSize: '0.84rem', letterSpacing: '0.02em' }}>
+                  {language === 'am'
+                    ? 'የኢትዮጵያ #1 ኮሚሽን-አልባ የገበያ ቦታ'
+                    : language === 'om'
+                    ? 'Gabaa Komishinii Malee Itoophiyaa #1'
+                    : 'Ethiopia’s #1 Commission-Free Marketplace'}
+                </span>
+              </div>
+
               {/* 3D Brand Logo */}
               <div className="mb-3 mb-md-4" style={{ maxWidth: '305px' }}>
                 <Image
@@ -109,13 +137,13 @@ export const Hero: React.FC = () => {
 
               {/* Headline */}
               <h1
-                className="fw-bold text-white mb-2"
+                className="fw-black text-white mb-3"
                 style={{
-                  fontSize: 'clamp(1.75rem, 2.5vw, 2.35rem)',
-                  letterSpacing: '-0.025em',
-                  lineHeight: 1.22,
-                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.18)',
-                  fontWeight: 800,
+                  fontSize: 'clamp(2rem, 3.2vw, 2.9rem)',
+                  letterSpacing: '-0.03em',
+                  lineHeight: 1.16,
+                  textShadow: '0 2px 14px rgba(0, 0, 0, 0.2)',
+                  fontWeight: 900,
                 }}
               >
                 {headline}
@@ -125,11 +153,11 @@ export const Hero: React.FC = () => {
               <p
                 className="text-white mb-4 mb-lg-5"
                 style={{
-                  fontSize: 'clamp(1.02rem, 1.25vw, 1.18rem)',
+                  fontSize: 'clamp(1.05rem, 1.35vw, 1.25rem)',
                   lineHeight: 1.55,
                   opacity: 0.95,
-                  textShadow: '0 1px 6px rgba(0, 0, 0, 0.12)',
-                  maxWidth: '460px',
+                  textShadow: '0 1px 6px rgba(0, 0, 0, 0.14)',
+                  maxWidth: '480px',
                 }}
               >
                 {supporting}
@@ -143,9 +171,9 @@ export const Hero: React.FC = () => {
                   className="hero-btn-register"
                   title="Register on youGO-mart"
                 >
-                  <User size={19} />
+                  <User size={20} />
                   <span>{registerText}</span>
-                  <ArrowRight size={19} />
+                  <ArrowRight size={20} />
                 </Link>
 
                 {/* Button B: About Us */}
@@ -154,9 +182,9 @@ export const Hero: React.FC = () => {
                   className="hero-btn-about"
                   title="About youGO-mart"
                 >
-                  <Info size={19} />
+                  <Info size={20} />
                   <span>{aboutText}</span>
-                  <ArrowRight size={19} />
+                  <ArrowRight size={20} />
                 </a>
               </div>
 
@@ -181,11 +209,13 @@ export const Hero: React.FC = () => {
                 className="position-relative text-center w-100 d-flex justify-content-center justify-content-lg-end"
                 style={{ maxWidth: '680px' }}
               >
+                {/* Ground reflection glow */}
+                <div className="mascot-ground-glow" />
                 <Image
-                  src="/images/mascot-clean.png"
+                  src="/images/mascot-3d-clean.png"
                   alt="youGO-mart Delivery Courier Mascot"
-                  width={644}
-                  height={575}
+                  width={1008}
+                  height={985}
                   priority
                   quality={100}
                   className="hero-mascot-img"
