@@ -36,292 +36,170 @@ export const Hero: React.FC = () => {
   const scrollText = t('scroll_down');
 
   return (
-    <div className="position-relative overflow-hidden" style={{ minHeight: '100svh', backgroundColor: '#F97316' }}>
-      {/* 1. MINIMAL & TRANSPARENT TOP NAVIGATION */}
-      <header
-        className="position-absolute top-0 start-0 w-100 px-3 px-md-5 py-3 d-flex align-items-center justify-content-between"
-        style={{ zIndex: 30 }}
-      >
-        {/* Brand Logo: Top Left */}
-        <Link
-          href="/"
-          className="d-flex align-items-center gap-2 text-white text-decoration-none"
-          title="youGO-mart"
+    <div className="position-relative overflow-hidden">
+      {/* 1. NATIVE 3D DESIGN HERO SECTION */}
+      <section className="hero-native-container">
+        {/* Minimal Transparent Top Header */}
+        <header
+          className="w-100 px-3 px-md-5 py-3 py-md-4 d-flex align-items-center justify-content-between position-relative"
+          style={{ zIndex: 30 }}
         >
-          <div className="d-flex align-items-center gap-1.5">
-            <span
-              className="fw-black text-white"
-              style={{
-                fontSize: '1.75rem',
-                letterSpacing: '-0.04em',
-                fontWeight: 900,
-                textShadow: '0 2px 8px rgba(0,0,0,0.2)',
-              }}
-            >
-              YG
-            </span>
-            <span
-              className="fw-bold text-white"
-              style={{
-                fontSize: '1.25rem',
-                letterSpacing: '-0.02em',
-                fontWeight: 700,
-                textShadow: '0 2px 8px rgba(0,0,0,0.2)',
-              }}
-            >
-              youGO-mart
-            </span>
-          </div>
-        </Link>
-
-        {/* Compact Language Selector: Top Right */}
-        <div>
-          <LanguageSwitcher />
-        </div>
-      </header>
-
-      {/* 2. FULL-SCREEN HERO SECTION (MINIMUM 100svh) */}
-      <section
-        className="d-flex flex-column justify-content-between position-relative"
-        style={{
-          minHeight: '100svh',
-          background: 'radial-gradient(circle at 65% 45%, #FB923C 0%, #F97316 48%, #EA580C 100%)',
-          paddingTop: '4.5rem',
-        }}
-      >
-        {/* DESKTOP / TABLET WIDESCREEN COMPOSITION */}
-        <div className="container-fluid d-none d-lg-block position-relative my-auto px-4 px-xl-5" style={{ maxWidth: '1440px' }}>
-          <div
-            className="position-relative mx-auto"
-            style={{
-              width: '100%',
-              maxWidth: '1240px',
-              aspectRatio: '1024 / 575',
-              borderRadius: '24px',
-              overflow: 'hidden',
-              boxShadow: '0 20px 50px rgba(0, 0, 0, 0.15)',
-            }}
+          {/* Brand Logo: Top Left */}
+          <Link
+            href="/"
+            className="d-flex align-items-center gap-2 text-white text-decoration-none"
+            title="youGO-mart"
           >
-            {/* High-res reference visual artwork */}
-            <Image
-              src="/images/yougo-mart-hero.png"
-              alt="youGO-mart — Discover More. Shop Smarter. Go Further."
-              fill
-              priority
-              quality={95}
-              style={{
-                objectFit: 'cover',
-                userSelect: 'none',
-              }}
-            />
-
-            {/* Live Interactive Button: REGISTER */}
-            <Link
-              href="/register"
-              className="position-absolute d-flex align-items-center justify-content-center gap-2 text-decoration-none fw-bold"
-              style={{
-                left: '7.4%',
-                top: '68.2%',
-                width: '16.6%',
-                height: '9.4%',
-                borderRadius: '9999px',
-                background: '#FFFFFF',
-                color: '#F97316',
-                boxShadow: '0 12px 35px rgba(234, 88, 12, 0.7), 0 2px 10px rgba(0,0,0,0.1)',
-                fontSize: 'clamp(0.85rem, 1.1vw, 1.05rem)',
-                transition: 'all 0.22s cubic-bezier(0.16, 1, 0.3, 1)',
-                zIndex: 10,
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
-                e.currentTarget.style.boxShadow = '0 16px 45px rgba(234, 88, 12, 0.9)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                e.currentTarget.style.boxShadow = '0 12px 35px rgba(234, 88, 12, 0.7), 0 2px 10px rgba(0,0,0,0.1)';
-              }}
-              title="Register on youGO-mart"
-            >
-              <User size={18} />
-              <span>{registerText}</span>
-              <ArrowRight size={18} />
-            </Link>
-
-            {/* Live Interactive Button: ABOUT US */}
-            <a
-              href="#about-us"
-              className="position-absolute d-flex align-items-center justify-content-center gap-2 text-decoration-none fw-bold text-white"
-              style={{
-                left: '24.8%',
-                top: '68.2%',
-                width: '15.6%',
-                height: '9.4%',
-                borderRadius: '9999px',
-                background: 'rgba(255, 255, 255, 0.15)',
-                border: '1.5px solid rgba(255, 255, 255, 0.8)',
-                backdropFilter: 'blur(8px)',
-                WebkitBackdropFilter: 'blur(8px)',
-                fontSize: 'clamp(0.85rem, 1.1vw, 1.05rem)',
-                transition: 'all 0.22s cubic-bezier(0.16, 1, 0.3, 1)',
-                zIndex: 10,
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
-                e.currentTarget.style.boxShadow = '0 8px 30px rgba(255, 255, 255, 0.4)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}
-              title="About youGO-mart"
-            >
-              <Info size={18} />
-              <span>{aboutText}</span>
-              <ArrowRight size={18} />
-            </a>
-
-            {/* Live Interactive: SCROLL DOWN INDICATOR */}
-            <a
-              href="#about-us"
-              className="position-absolute d-flex align-items-center gap-2 text-decoration-none text-white fw-bold"
-              style={{
-                left: '5.5%',
-                top: '89.0%',
-                opacity: 0.92,
-                fontSize: 'clamp(0.78rem, 0.95vw, 0.92rem)',
-                transition: 'transform 0.2s ease, opacity 0.2s ease',
-                zIndex: 10,
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(2px)';
-                e.currentTarget.style.opacity = '1';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.opacity = '0.92';
-              }}
-              title="Scroll Down"
-            >
-              <div
+            <div className="d-flex align-items-center gap-2">
+              <span
+                className="fw-black text-white"
                 style={{
-                  width: '20px',
-                  height: '32px',
-                  borderRadius: '10px',
-                  border: '2px solid rgba(255, 255, 255, 0.85)',
-                  position: 'relative',
-                  display: 'flex',
-                  justifyContent: 'center',
+                  fontSize: '1.85rem',
+                  letterSpacing: '-0.04em',
+                  fontWeight: 900,
+                  textShadow: '0 2px 8px rgba(0,0,0,0.2)',
                 }}
               >
-                <div
+                YG
+              </span>
+              <span
+                className="fw-bold text-white"
+                style={{
+                  fontSize: '1.3rem',
+                  letterSpacing: '-0.02em',
+                  fontWeight: 700,
+                  textShadow: '0 2px 8px rgba(0,0,0,0.2)',
+                }}
+              >
+                youGO-mart
+              </span>
+            </div>
+          </Link>
+
+          {/* Compact Language Selector: Top Right */}
+          <div>
+            <LanguageSwitcher />
+          </div>
+        </header>
+
+        {/* Hero Content Stage: Two Columns */}
+        <div
+          className="container-fluid px-3 px-md-5 my-auto py-3 py-md-4 position-relative"
+          style={{ maxWidth: '1440px', zIndex: 10 }}
+        >
+          <div className="row align-items-center g-4 g-lg-5">
+            {/* Left Column: 3D Logo, Headline, Buttons, Scroll Indicator */}
+            <div className="col-12 col-lg-5 col-xl-5 ps-lg-4 text-start text-white">
+              {/* 3D Brand Logo */}
+              <div className="mb-3 mb-md-4" style={{ maxWidth: '305px' }}>
+                <Image
+                  src="/images/logo-3d-clean.png"
+                  alt="youGO-mart 3D Brand Logo"
+                  width={305}
+                  height={240}
+                  priority
                   style={{
-                    width: '3px',
-                    height: '6px',
-                    backgroundColor: '#FFFFFF',
-                    borderRadius: '2px',
-                    marginTop: '5px',
+                    width: '100%',
+                    maxWidth: '280px',
+                    height: 'auto',
+                    filter: 'drop-shadow(0 12px 28px rgba(0, 0, 0, 0.14))',
                   }}
                 />
               </div>
-              <span>{scrollText} ↓</span>
-            </a>
+
+              {/* Headline */}
+              <h1
+                className="fw-bold text-white mb-2"
+                style={{
+                  fontSize: 'clamp(1.75rem, 2.5vw, 2.35rem)',
+                  letterSpacing: '-0.025em',
+                  lineHeight: 1.22,
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.18)',
+                  fontWeight: 800,
+                }}
+              >
+                {headline}
+              </h1>
+
+              {/* Supporting Copy */}
+              <p
+                className="text-white mb-4 mb-lg-5"
+                style={{
+                  fontSize: 'clamp(1.02rem, 1.25vw, 1.18rem)',
+                  lineHeight: 1.55,
+                  opacity: 0.95,
+                  textShadow: '0 1px 6px rgba(0, 0, 0, 0.12)',
+                  maxWidth: '460px',
+                }}
+              >
+                {supporting}
+              </p>
+
+              {/* CTA Action Buttons */}
+              <div className="d-flex flex-wrap align-items-center gap-3 mb-4 mb-lg-5">
+                {/* Button A: Register */}
+                <Link
+                  href="/register"
+                  className="hero-btn-register"
+                  title="Register on youGO-mart"
+                >
+                  <User size={19} />
+                  <span>{registerText}</span>
+                  <ArrowRight size={19} />
+                </Link>
+
+                {/* Button B: About Us */}
+                <a
+                  href="#about-us"
+                  className="hero-btn-about"
+                  title="About youGO-mart"
+                >
+                  <Info size={19} />
+                  <span>{aboutText}</span>
+                  <ArrowRight size={19} />
+                </a>
+              </div>
+
+              {/* Mouse Scroll Down Indicator */}
+              <div className="pt-2">
+                <a
+                  href="#explore-marketplace"
+                  className="hero-scroll-indicator"
+                  title="Scroll Down"
+                >
+                  <div className="mouse-pill">
+                    <div className="mouse-wheel" />
+                  </div>
+                  <span>{scrollText} ↓</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Right Column: 3D Mascot Character */}
+            <div className="col-12 col-lg-7 col-xl-7 d-flex align-items-center justify-content-center justify-content-lg-end position-relative">
+              <div
+                className="position-relative text-center w-100 d-flex justify-content-center justify-content-lg-end"
+                style={{ maxWidth: '680px' }}
+              >
+                <Image
+                  src="/images/mascot-clean.png"
+                  alt="youGO-mart Delivery Courier Mascot"
+                  width={644}
+                  height={575}
+                  priority
+                  quality={100}
+                  className="hero-mascot-img"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* MOBILE & TABLET PORTRAIT RESPONSIVE COMPOSITION */}
-        <div className="container d-block d-lg-none py-4 px-4 my-auto text-center text-white">
-          {/* Animated 3D Mascot Graphic */}
-          <div className="position-relative mx-auto mb-4" style={{ maxWidth: '420px', width: '100%', aspectRatio: '16 / 9' }}>
-            <Image
-              src="/images/yougo-mart-hero.png"
-              alt="youGO-mart Mascot"
-              fill
-              priority
-              className="rounded-4 shadow-lg"
-              style={{
-                objectFit: 'cover',
-                border: '2px solid rgba(255, 255, 255, 0.35)',
-              }}
-            />
-          </div>
-
-          {/* Main Headline & Supporting Text */}
-          <h1
-            className="fw-black display-6 text-white mb-2"
-            style={{
-              letterSpacing: '-0.03em',
-              fontWeight: 900,
-              textShadow: '0 2px 12px rgba(0,0,0,0.25)',
-              lineHeight: 1.18,
-            }}
-          >
-            {headline}
-          </h1>
-          <p
-            className="lead text-white-50 mb-4 mx-auto"
-            style={{
-              fontSize: '1.02rem',
-              maxWidth: '440px',
-              lineHeight: 1.5,
-              textShadow: '0 1px 4px rgba(0,0,0,0.15)',
-            }}
-          >
-            {supporting}
-          </p>
-
-          {/* The Two Primary Action Buttons */}
-          <div className="d-flex flex-column gap-3 mx-auto mb-4" style={{ maxWidth: '360px' }}>
-            {/* Button A: Register */}
-            <Link
-              href="/register"
-              className="btn py-3 px-4 rounded-pill fw-bold d-flex align-items-center justify-content-center gap-2 shadow-lg"
-              style={{
-                backgroundColor: '#FFFFFF',
-                color: '#F97316',
-                boxShadow: '0 12px 30px rgba(234, 88, 12, 0.65)',
-                fontSize: '1.05rem',
-                border: 'none',
-              }}
-            >
-              <User size={19} />
-              <span>{registerText}</span>
-              <ArrowRight size={19} />
-            </Link>
-
-            {/* Button B: About Us */}
-            <a
-              href="#about-us"
-              className="btn py-3 px-4 rounded-pill fw-bold d-flex align-items-center justify-content-center gap-2 text-white"
-              style={{
-                background: 'rgba(255, 255, 255, 0.15)',
-                border: '1.5px solid rgba(255, 255, 255, 0.8)',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-                fontSize: '1.05rem',
-              }}
-            >
-              <Info size={19} />
-              <span>{aboutText}</span>
-              <ArrowRight size={19} />
-            </a>
-          </div>
-
-          {/* Mobile Scroll Indicator */}
-          <a
-            href="#about-us"
-            className="d-inline-flex align-items-center gap-1.5 text-white-50 small text-decoration-none"
-          >
-            <span>↓ {scrollText}</span>
-          </a>
-        </div>
-
-        {/* BOTTOM SUBTLE TRANSITION STRIP */}
-        <div style={{ height: '1.5rem', width: '100%' }} />
+        {/* Subtle Bottom Spacer */}
+        <div style={{ height: '1.5rem', width: '100%', position: 'relative', zIndex: 10 }} />
       </section>
 
-      {/* 3. QUICK SEARCH BAR DIRECTLY BENEATH HERO */}
+      {/* 2. QUICK SEARCH BAR DIRECTLY BENEATH HERO */}
       <section
         id="explore-marketplace"
         className="py-4 position-relative"
