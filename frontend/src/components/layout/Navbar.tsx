@@ -57,7 +57,7 @@ function NavbarContent() {
   const isAdmin = user?.role === 'admin';
   const isBuyer = user?.role === 'buyer' || (!isSeller && !isAdmin && isAuthenticated);
 
-  if (pathname === '/') {
+  if (pathname === '/' || pathname === '/about-us') {
     return null;
   }
 

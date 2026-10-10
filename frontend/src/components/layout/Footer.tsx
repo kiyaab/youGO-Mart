@@ -1,9 +1,18 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Logo } from '@/components/brand/Logo';
 import { ShieldCheck, HeartHandshake, PhoneCall, AlertCircle, Info, ExternalLink } from 'lucide-react';
 
 export const Footer: React.FC = () => {
+  const pathname = usePathname();
+
+  if (pathname === '/about-us') {
+    return null;
+  }
+
   return (
     <footer
       style={{
